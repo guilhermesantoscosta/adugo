@@ -1,0 +1,2121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ADUGO — Menu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@900&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== CSS COMPLETO ===== */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Barlow', sans-serif;
+            padding: 1.5rem;
+            background-color: #f8efe3;
+            background-image:
+                repeating-linear-gradient(45deg,
+                    #f4e8d1 0px, #f4e8d1 8px,
+                    #d9c2a7 8px, #d9c2a7 10px,
+                    #f4e8d1 10px, #f4e8d1 18px,
+                    #c9ad8b 18px, #c9ad8b 20px,
+                    #f4e8d1 20px, #f4e8d1 28px),
+                repeating-linear-gradient(-45deg,
+                    #f4e8d1 0px, #f4e8d1 8px,
+                    #d9c2a7 8px, #d9c2a7 10px,
+                    #f4e8d1 10px, #f4e8d1 18px,
+                    #c9ad8b 18px, #c9ad8b 20px,
+                    #f4e8d1 20px, #f4e8d1 28px);
+            background-size: 40px 40px;
+        }
+        .menu-wrapper {
+            position: relative;
+            max-width: 780px;
+            width: 100%;
+            padding: 3rem 2.8rem 3.2rem;
+            background: rgba(255, 252, 245, 0.92);
+            backdrop-filter: blur(2px);
+            border-radius: 32px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(182, 136, 90, 0.15), inset 0 0 0 1px rgba(255, 255, 255, 0.6);
+            transition: box-shadow 0.3s ease;
+            border: 2px solid rgba(201, 173, 139, 0.15);
+            background-image:
+                repeating-linear-gradient(45deg,
+                    rgba(244, 232, 209, 0.3) 0px, rgba(244, 232, 209, 0.3) 8px,
+                    rgba(217, 194, 167, 0.2) 8px, rgba(217, 194, 167, 0.2) 10px,
+                    rgba(244, 232, 209, 0.3) 10px, rgba(244, 232, 209, 0.3) 18px,
+                    rgba(201, 173, 139, 0.15) 18px, rgba(201, 173, 139, 0.15) 20px,
+                    rgba(244, 232, 209, 0.3) 20px, rgba(244, 232, 209, 0.3) 28px),
+                repeating-linear-gradient(-45deg,
+                    rgba(244, 232, 209, 0.3) 0px, rgba(244, 232, 209, 0.3) 8px,
+                    rgba(217, 194, 167, 0.2) 8px, rgba(217, 194, 167, 0.2) 10px,
+                    rgba(244, 232, 209, 0.3) 10px, rgba(244, 232, 209, 0.3) 18px,
+                    rgba(201, 173, 139, 0.15) 18px, rgba(201, 173, 139, 0.15) 20px,
+                    rgba(244, 232, 209, 0.3) 20px, rgba(244, 232, 209, 0.3) 28px);
+            background-size: 40px 40px;
+            background-blend-mode: overlay;
+            animation: weaveFloat 6s ease-in-out infinite;
+        }
+        @keyframes weaveFloat {
+            0%,
+            100% {
+                box-shadow: 0 12px 40px rgba(0, 0, 0, 0.06), 0 0 0 1px rgba(182, 136, 90, 0.15);
+            }
+            50% {
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.04), 0 0 0 1px rgba(182, 136, 90, 0.25);
+            }
+        }
+        .game-title {
+            text-align: center;
+            font-family: 'Frank Ruhl Libre', serif;
+            font-weight: 900;
+            font-size: clamp(3.8rem, 13vw, 6.8rem);
+            letter-spacing: 0.04em;
+            color: #3d2a1e;
+            text-shadow: 2px 2px 0 rgba(182, 136, 90, 0.15), 0 4px 12px rgba(0, 0, 0, 0.03);
+            margin-top: -0.1rem;
+            margin-bottom: 0.6rem;
+            line-height: 1.05;
+            transform: rotate(-0.5deg);
+        }
+        .game-title::after {
+            content: '';
+            display: block;
+            width: 60%;
+            height: 3px;
+            margin: 0.6rem auto 0;
+            background: repeating-linear-gradient(90deg,
+                    #d9c2a7 0px, #d9c2a7 6px,
+                    transparent 6px, transparent 12px,
+                    #c9ad8b 12px, #c9ad8b 18px,
+                    transparent 18px, transparent 24px);
+            border-radius: 4px;
+            opacity: 0.6;
+        }
+        .menu-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2.4rem 0 1.8rem;
+            align-items: center;
+        }
+        .menu-btn {
+            position: relative;
+            width: 90%;
+            max-width: 380px;
+            padding: 0.85rem 1.8rem;
+            font-family: 'Barlow', sans-serif;
+            font-weight: 600;
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #3d2a1e;
+            background: rgba(255, 252, 245, 0.85);
+            border: 2px solid #d9c2a7;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            backdrop-filter: blur(2px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .menu-btn:hover {
+            background: #f4e8d1;
+            border-color: #b6885a;
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(182, 136, 90, 0.12);
+        }
+        .menu-btn:active {
+            transform: translateY(0px) scale(0.98);
+            background: #e9dac4;
+            border-color: #8a6542;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+            transition-duration: 0.05s;
+        }
+        .menu-footer {
+            display: flex;
+            justify-content: center;
+            gap: 1.4rem;
+            flex-wrap: wrap;
+            margin-top: 1.6rem;
+            padding-top: 1.6rem;
+            border-top: 2px solid rgba(201, 173, 139, 0.3);
+        }
+        .menu-footer .menu-btn {
+            width: auto;
+            padding: 0.5rem 1.6rem;
+            font-size: clamp(0.7rem, 1.8vw, 1rem);
+            max-width: 180px;
+            border-radius: 40px;
+            background: rgba(255, 252, 245, 0.6);
+            border-width: 1.5px;
+            box-shadow: none;
+        }
+        .menu-footer .menu-btn:hover {
+            background: #f4e8d1;
+            border-color: #b6885a;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(182, 136, 90, 0.08);
+        }
+        .menu-footer .menu-btn:active {
+            transform: translateY(0px);
+        }
+        .pattern-divider {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.6rem;
+            margin: 0.2rem 0 0.2rem;
+            opacity: 0.5;
+        }
+        .pattern-divider .line {
+            flex: 1;
+            height: 2px;
+            max-width: 60px;
+            background: repeating-linear-gradient(90deg,
+                    #d9c2a7 0px, #d9c2a7 4px,
+                    transparent 4px, transparent 8px,
+                    #c9ad8b 8px, #c9ad8b 12px,
+                    transparent 12px, transparent 16px);
+        }
+        .pattern-divider .diamond {
+            font-size: 0.5rem;
+            color: #b6885a;
+            opacity: 0.4;
+            transform: rotate(45deg);
+            display: inline-block;
+            margin: 0 0.1rem;
+        }
+        .rules-overlay {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 252, 245, 0.96);
+            backdrop-filter: blur(4px);
+            border-radius: 32px;
+            padding: 2.8rem 2.8rem 3.2rem;
+            z-index: 10;
+            overflow-y: auto;
+            animation: fadeRules 0.3s ease;
+            border: 2px solid rgba(201, 173, 139, 0.2);
+        }
+        .rules-overlay.visible {
+            display: block;
+        }
+        @keyframes fadeRules {
+            0% { opacity: 0; transform: scale(0.97); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+        .rules-overlay .close-rules {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.2rem;
+            font-family: 'Barlow', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            line-height: 1;
+            color: #3d2a1e;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.2rem 0.6rem;
+            border-radius: 8px;
+            transition: background 0.15s;
+            opacity: 0.7;
+        }
+        .rules-overlay .close-rules:hover {
+            background: rgba(201, 173, 139, 0.2);
+            opacity: 1;
+        }
+        .rules-overlay h2 {
+            font-family: 'Frank Ruhl Libre', serif;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #3d2a1e;
+            margin: 0.5rem 0 1.2rem;
+            text-align: center;
+            letter-spacing: 0.04em;
+        }
+        .rules-overlay p {
+            font-family: 'Barlow', sans-serif;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #3d2a1e;
+            margin-bottom: 0.8rem;
+        }
+        .rules-overlay p:last-child {
+            margin-bottom: 0;
+        }
+        #game-container {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 1000;
+            background: #1a1e2a;
+            border: none;
+        }
+        #game-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+        #result-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(6px);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #fff;
+            font-family: 'Frank Ruhl Libre', serif;
+            text-align: center;
+            padding: 2rem;
+        }
+        #result-overlay.visible {
+            display: flex;
+        }
+        #result-overlay .winner-text {
+            font-size: clamp(3rem, 10vw, 5rem);
+            font-weight: 900;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.5);
+        }
+        #result-overlay .sub-text {
+            font-size: clamp(1.2rem, 3vw, 2rem);
+            font-weight: 400;
+            opacity: 0.8;
+            font-family: 'Barlow', sans-serif;
+        }
+        #result-overlay .timer {
+            margin-top: 2rem;
+            font-size: 1.2rem;
+            opacity: 0.6;
+            font-family: 'Barlow', sans-serif;
+        }
+        #volume-control {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            pointer-events: none;
+        }
+        #volume-control * {
+            pointer-events: auto;
+        }
+        #volume-toggle {
+            background: rgba(30, 20, 15, 0.8);
+            backdrop-filter: blur(6px);
+            border: 2px solid rgba(201, 173, 139, 0.4);
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 24px;
+            color: #f8efe3;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            transition: all 0.2s;
+            user-select: none;
+        }
+        #volume-toggle:hover {
+            transform: scale(1.05);
+            border-color: #b6885a;
+        }
+        #volume-toggle:active {
+            transform: scale(0.95);
+        }
+        #volume-slider-wrap {
+            display: none;
+            background: rgba(30, 20, 15, 0.85);
+            backdrop-filter: blur(6px);
+            padding: 10px 16px;
+            border-radius: 30px;
+            border: 2px solid rgba(201, 173, 139, 0.3);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            min-width: 120px;
+        }
+        #volume-slider-wrap.open {
+            display: flex;
+        }
+        #volume-slider-wrap input[type="range"] {
+            width: 100%;
+            height: 4px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: #ddbb88;
+            border-radius: 2px;
+            outline: none;
+            cursor: pointer;
+        }
+        #volume-slider-wrap input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background: #ffdd99;
+            border-radius: 50%;
+            border: 2px solid #2a2418;
+            cursor: pointer;
+        }
+        #volume-slider-wrap input[type="range"]::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background: #ffdd99;
+            border-radius: 50%;
+            border: 2px solid #2a2418;
+            cursor: pointer;
+        }
+        #volume-slider-wrap .vol-label {
+            font-family: 'Barlow', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: #f8efe3;
+            letter-spacing: 0.5px;
+        }
+        @media (max-width: 600px) {
+            .menu-wrapper { padding: 1.8rem 1.2rem 2.2rem; border-radius: 24px; }
+            .game-title { font-size: clamp(2.8rem, 12vw, 4rem); }
+            .game-title::after { width: 70%; height: 2px; }
+            .menu-btn { width: 100%; padding: 0.7rem 1.2rem; font-size: clamp(0.9rem, 3.6vw, 1.2rem); border-radius: 40px; }
+            .menu-footer { gap: 0.8rem; flex-direction: row; flex-wrap: wrap; justify-content: center; }
+            .menu-footer .menu-btn { font-size: clamp(0.6rem, 2.2vw, 0.85rem); padding: 0.4rem 1rem; min-width: 70px; }
+            .menu-buttons { gap: 0.8rem; margin: 1.6rem 0 1rem; }
+            .rules-overlay { padding: 1.8rem 1.2rem 2.2rem; border-radius: 24px; }
+            .rules-overlay .close-rules { top: 0.8rem; right: 0.8rem; font-size: 1.5rem; }
+            .rules-overlay h2 { font-size: 1.4rem; margin-top: 0.2rem; }
+            .rules-overlay p { font-size: 0.95rem; }
+            #volume-control { top: 12px; }
+            #volume-toggle { width: 40px; height: 40px; font-size: 20px; }
+            #volume-slider-wrap { padding: 8px 12px; min-width: 100px; }
+            #volume-slider-wrap .vol-label { font-size: 11px; }
+        }
+        @media (max-width: 400px) {
+            .menu-wrapper { padding: 1.2rem 0.8rem 1.6rem; border-radius: 20px; }
+            .game-title { font-size: clamp(2.2rem, 11vw, 3rem); }
+            .menu-btn { font-size: clamp(0.8rem, 3.2vw, 1rem); padding: 0.5rem 0.8rem; }
+            .menu-footer .menu-btn { font-size: clamp(0.5rem, 2vw, 0.7rem); padding: 0.3rem 0.6rem; min-width: 60px; }
+            .rules-overlay { padding: 1rem 0.8rem 1.4rem; border-radius: 20px; }
+            .rules-overlay .close-rules { top: 0.5rem; right: 0.5rem; font-size: 1.3rem; }
+            .rules-overlay h2 { font-size: 1.2rem; margin-top: 0.2rem; }
+            .rules-overlay p { font-size: 0.85rem; }
+            #volume-control { top: 10px; }
+            #volume-toggle { width: 36px; height: 36px; font-size: 18px; }
+            #volume-slider-wrap { padding: 6px 10px; min-width: 80px; }
+            #volume-slider-wrap .vol-label { font-size: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="menu-wrapper" id="menuWrapper">
+        <h1 class="game-title">ADUGO</h1>
+        <div class="menu-buttons">
+            <button class="menu-btn" data-mode="cpu_onca" id="btnCpuOnca"> Onça vs CPU</button>
+            <button class="menu-btn" data-mode="cpu_dog" id="btnCpuDog">CPU vs Cachorro</button>
+            <button class="menu-btn" data-mode="pvp" id="btnPvp">PvP (2 jogadores)</button>
+            <button class="menu-btn" data-action="howto" id="howtoBtn">Como Jogar</button>
+        </div>
+        <div id="rulesOverlay" class="rules-overlay">
+            <button class="close-rules" id="closeRulesBtn">✕</button>
+            <h2>Jogo da Onça — Regras</h2>
+            <p><strong>O que é?</strong> Adugo (onça ou onça-pintada na língua do povo indígena Boe Bororo) é um jogo de tabuleiro tradicional de povos indígenas brasileiros também conhecido como jogo da onça. É disputado por dois jogadores: um controla a <strong>onça</strong> e o outro controla os <strong>cachorros</strong>.</p>
+            <p><strong>Objetivo da onça:</strong> Capturar (comer) cinco cachorros para vencer.</p>
+            <p><strong>Objetivo dos cachorros:</strong> Cercar a onça, deixando-a sem movimento, para vencer.</p>
+            <p><strong>Como se move a onça:</strong> Anda uma casa por vez, em qualquer direção (para frente, para trás, para os lados ou na diagonal), seguindo as linhas do tabuleiro. Ela também pode pular sobre um cachorro que esteja ao lado, desde que a casa seguinte esteja vazia — assim ela "captura" o cachorro.</p>
+            <p><strong>Como se movem os cachorros:</strong> Cada cachorro anda uma casa por vez, seguindo as linhas do tabuleiro.</p>
+            <p><strong>Início do jogo:</strong> A onça começa no centro do tabuleiro. Os cachorros ocupam as casas de uma das pontas. Os jogadores alternam turnos, movendo um de seus peões por vez.</p>
+            <p><strong>Dica:</strong> Os cachorros precisam trabalhar em equipe para cercar a onça. A onça deve ser rápida e esperta para capturar os cachorros antes de ser encurralada.</p>
+        </div>
+        <div class="pattern-divider">
+            <span class="line"></span>
+            <span class="diamond">◆</span>
+            <span class="diamond">◆</span>
+            <span class="diamond">◆</span>
+            <span class="line"></span>
+        </div>
+        <div class="menu-footer">
+            <button class="menu-btn" data-action="credits">Créditos</button>
+            <button class="menu-btn" data-action="exit">Sair</button>
+        </div>
+    </div>
+    <div id="game-container">
+        <iframe id="gameFrame" srcdoc=""></iframe>
+    </div>
+    <div id="result-overlay">
+        <div class="winner-text" id="winnerText">🏆</div>
+        <div class="sub-text" id="subText"></div>
+        <div class="timer" id="timerText">Voltando ao menu em 10s</div>
+    </div>
+    <div id="volume-control">
+        <button id="volume-toggle" aria-label="Controle de volume">🔊</button>
+        <div id="volume-slider-wrap">
+            <input type="range" id="volume-slider" min="0" max="100" value="80" />
+            <span class="vol-label" id="vol-display">80%</span>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ================================================================
+            // MÚSICA
+            // ================================================================
+            const cycleDuration = 3.0;
+            const pattern = [
+
+  	    // Melodia grave
+            { time: 0.0, note: 'D2', dur: 0.5 },
+            { time: 0.5, note: 'D2', dur: 0.2 },
+            { time: 0.7, note: 'D2', dur: 0.4 },
+            { time: 1.1, note: 'G2', dur: 0.4 },
+
+
+            { time: 1.5, note: 'C2', dur: 0.5 },
+            { time: 2.0, note: 'C2', dur: 0.2 },
+            { time: 2.2, note: 'C2', dur: 0.4 },
+            { time: 2.6, note: 'E2', dur: 0.4 },
+
+            // Melodia aguda
+            { time: 0.0, note: 'D4', dur: 0.4 },
+            { time: 0.4, note: 'D4', dur: 0.2 },
+            { time: 0.6, note: 'G4', dur: 0.4 },
+            { time: 1.0, note: 'C4', dur: 0.5 },
+
+
+            { time: 1.5, note: 'C4', dur: 0.4 },
+            { time: 1.9, note: 'C4', dur: 0.5 },
+            { time: 2.4, note: 'E4', dur: 0.6 },
+
+            ];
+
+            let audioCtx = null;
+            let musicPlaying = false;
+            let musicTimer = null;
+            let nextStartTime = 0;
+            let masterGainNode = null;
+            let volumeValue = 0.8;
+            let scheduledNotes = [];
+
+            function noteToFreq(note) {
+                const notes = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B'];
+                const octave = parseInt(note.slice(-1));
+                const name = note.slice(0, -1);
+                const index = notes.indexOf(name);
+                if (index === -1) return 0;
+                const a4 = 440;
+                const semitones = (octave - 4) * 12 + (index - 9);
+                return a4 * Math.pow(2, semitones / 12);
+            }
+
+            function playSound(freq, start, dur) {
+                if (!audioCtx || !masterGainNode) return;
+                try {
+                    const osc = audioCtx.createOscillator();
+                    const gain = audioCtx.createGain();
+                    const filter = audioCtx.createBiquadFilter();
+
+                    osc.type = 'sine';
+                    osc.frequency.value = freq;
+                    filter.type = 'lowpass';
+                    filter.frequency.value = 2000;
+                    filter.Q.value = 1;
+
+                    const volume = 0.35;
+                    const attack = 0.02;
+                    const release = 0.12;
+
+                    gain.gain.setValueAtTime(0, start);
+                    gain.gain.linearRampToValueAtTime(volume, start + attack);
+                    const releaseStart = Math.max(start + dur - release, start + attack + 0.001);
+                    if (releaseStart > start + attack) gain.gain.setValueAtTime(volume, releaseStart);
+                    gain.gain.exponentialRampToValueAtTime(0.001, start + dur);
+
+                    osc.connect(filter);
+                    filter.connect(gain);
+                    gain.connect(masterGainNode);
+
+                    osc.start(start);
+                    osc.stop(start + dur + 0.05);
+                    scheduledNotes.push({ osc, gain, filter });
+                } catch (e) { /* silêncio */ }
+            }
+
+            function scheduleCycle(startTime) {
+                pattern.forEach(ev => {
+                    const absStart = startTime + ev.time;
+                    const freq = noteToFreq(ev.note);
+                    playSound(freq, absStart, ev.dur);
+                });
+            }
+
+            function scheduleNextCycle() {
+                if (!musicPlaying) return;
+                try {
+                    const now = audioCtx.currentTime;
+                    let start = Math.max(now, nextStartTime);
+                    scheduleCycle(start);
+                    nextStartTime = start + cycleDuration;
+                    const delay = (nextStartTime - audioCtx.currentTime) * 1000;
+                    musicTimer = setTimeout(scheduleNextCycle, Math.max(delay, 10));
+                } catch (e) {
+                    musicTimer = setTimeout(scheduleNextCycle, 1000);
+                }
+            }
+
+            function startMusic() {
+                if (musicPlaying) return;
+                try {
+                    if (!audioCtx) {
+                        audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+                        masterGainNode = audioCtx.createGain();
+                        masterGainNode.gain.value = volumeValue;
+                        masterGainNode.connect(audioCtx.destination);
+                    }
+                    if (audioCtx.state === 'suspended') audioCtx.resume();
+                    musicPlaying = true;
+                    nextStartTime = audioCtx.currentTime;
+                    scheduleNextCycle();
+                } catch (e) { /* silêncio */ }
+            }
+
+            function stopMusic() {
+                musicPlaying = false;
+                if (musicTimer) { clearTimeout(musicTimer);
+                    musicTimer = null; }
+                scheduledNotes.forEach(({ osc, gain, filter }) => {
+                    try { osc.disconnect(); } catch (e) {}
+                    try { gain.disconnect(); } catch (e) {}
+                    try { filter.disconnect(); } catch (e) {}
+                });
+                scheduledNotes = [];
+                if (audioCtx && audioCtx.state !== 'closed') {
+                    try { audioCtx.suspend(); } catch (e) {}
+                }
+            }
+
+            function setVolume(val) {
+                volumeValue = Math.max(0, Math.min(1, val / 100));
+                if (masterGainNode) {
+                    try { masterGainNode.gain.setTargetAtTime(volumeValue, audioCtx.currentTime, 0.05); } catch (e) {}
+                }
+                document.getElementById('vol-display').textContent = Math.round(val) + '%';
+            }
+
+            const toggleBtn = document.getElementById('volume-toggle');
+            const sliderWrap = document.getElementById('volume-slider-wrap');
+            const volumeSlider = document.getElementById('volume-slider');
+            let sliderOpen = false;
+
+            toggleBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                sliderOpen = !sliderOpen;
+                sliderWrap.classList.toggle('open', sliderOpen);
+            });
+            volumeSlider.addEventListener('input', (e) => {
+                const val = parseInt(e.target.value);
+                setVolume(val);
+            });
+            document.addEventListener('click', (e) => {
+                if (sliderOpen && !sliderWrap.contains(e.target) && e.target !== toggleBtn) {
+                    sliderWrap.classList.remove('open');
+                    sliderOpen = false;
+                }
+            });
+            setVolume(80);
+
+            function initMusic() {
+                startMusic();
+                document.removeEventListener('click', initMusic);
+                document.removeEventListener('touchstart', initMusic);
+            }
+            document.addEventListener('click', initMusic);
+            document.addEventListener('touchstart', initMusic);
+
+            // ================================================================
+            // HTML DO JOGO (com randomismo anti-loop)
+            // ================================================================
+            const gameHTML = `
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Jogo da Onça</title>
+    <style>
+        body { margin: 0; overflow: hidden; font-family: 'Segoe UI', sans-serif; touch-action: none; }
+        #turn-indicator { position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.75); color: #ffdd99; padding: 12px 20px; border-radius: 40px; font-weight: bold; font-size: 18px; backdrop-filter: blur(8px); pointer-events: none; z-index: 10; border-right: 3px solid #ffaa66; }
+        #dogs-count { position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.6); color: #ddbb88; padding: 8px 16px; border-radius: 30px; font-weight: bold; font-size: 16px; backdrop-filter: blur(5px); pointer-events: none; z-index: 10; }
+        #capture-count { position: absolute; bottom: 20px; left: 20px; background: rgba(0,0,0,0.6); color: #ffaa66; padding: 8px 16px; border-radius: 30px; font-weight: bold; font-size: 16px; backdrop-filter: blur(5px); pointer-events: none; z-index: 10; }
+        #voltar-btn { position: absolute; bottom: 20px; right: 20px; background: #d4a373; color: #2a2418; border: none; border-radius: 20px; padding: 12px 20px; font-weight: bold; cursor: pointer; z-index: 20; font-family: monospace; font-size: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+        #voltar-btn:hover { background: #ffdd99; }
+        .move-hint { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(0,0,0,0.8); color: #ffcc88; padding: 8px 16px; border-radius: 30px; font-size: 16px; pointer-events: none; z-index: 20; white-space: nowrap; animation: fadeOut 1s forwards; font-weight: bold; }
+        @keyframes fadeOut { 0% { opacity: 1; } 100% { opacity: 0; } }
+        #confirm-modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        #confirm-modal.visible { display: flex; }
+        #confirm-modal .modal-box {
+            background: #f8efe3;
+            padding: 2rem 2.5rem;
+            border-radius: 24px;
+            max-width: 420px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+        }
+        #confirm-modal .modal-box p {
+            font-size: 1.3rem;
+            color: #3d2a1e;
+            margin-bottom: 1.8rem;
+            font-weight: 600;
+        }
+        #confirm-modal .modal-box .btn-group {
+            display: flex;
+            gap: 1.2rem;
+            justify-content: center;
+        }
+        #confirm-modal .modal-box .btn-group button {
+            padding: 0.6rem 2rem;
+            border: none;
+            border-radius: 40px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        #confirm-modal .modal-box .btn-group .btn-sim {
+            background: #d4a373;
+            color: #2a2418;
+        }
+        #confirm-modal .modal-box .btn-group .btn-sim:hover {
+            background: #b6885a;
+        }
+        #confirm-modal .modal-box .btn-group .btn-nao {
+            background: #8a6a4a;
+            color: #f8efe3;
+        }
+        #confirm-modal .modal-box .btn-group .btn-nao:hover {
+            background: #6a4a2a;
+        }
+        @media (max-width: 600px) {
+            #turn-indicator, #dogs-count, #capture-count { font-size: 14px; padding: 6px 12px; }
+            #voltar-btn { padding: 8px 16px; font-size: 14px; }
+            .move-hint { font-size: 14px; white-space: normal; text-align: center; width: 80%; }
+            #confirm-modal .modal-box { padding: 1.5rem; }
+            #confirm-modal .modal-box p { font-size: 1.1rem; }
+            #confirm-modal .modal-box .btn-group button { font-size: 1rem; padding: 0.5rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <div id="turn-indicator"> Turno: <span id="current-turn">ONÇA</span></div>
+    <div id="dogs-count"> Cães: <span id="dogs-left">14</span></div>
+    <div id="capture-count"> Capturas: <span id="captures">0</span> / 5</div>
+    <button id="voltar-btn">Voltar ao Menu</button>
+    <div id="confirm-modal">
+        <div class="modal-box">
+            <p>Você deseja abandonar a partida?</p>
+            <div class="btn-group">
+                <button class="btn-sim" id="confirm-sim">Sim</button>
+                <button class="btn-nao" id="confirm-nao">Não</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+            }
+        }
+    <\/script>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
+
+        // ============================================================
+        // CENA (mesmo código de sempre)
+        // ============================================================
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x87CEEB);
+        scene.fog = new THREE.Fog(0x87CEEB, 14, 30);
+
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(7, 5, 9);
+        camera.lookAt(0, 0.2, 1);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        document.body.appendChild(renderer.domElement);
+
+        const labelRenderer = new CSS2DRenderer();
+        labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        labelRenderer.domElement.style.position = 'absolute';
+        labelRenderer.domElement.style.top = '0px';
+        labelRenderer.domElement.style.left = '0px';
+        labelRenderer.domElement.style.pointerEvents = 'none';
+        document.body.appendChild(labelRenderer.domElement);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.target.set(0, 0.1, 1.2);
+        controls.maxPolarAngle = Math.PI / 2.4;
+        controls.minDistance = 3;
+        controls.maxDistance = 18;
+
+        // ----- CHÃO -----
+        const groundGeo = new THREE.PlaneGeometry(50, 50);
+        const groundMat = new THREE.MeshStandardMaterial({ color: 0x8B7355, roughness: 0.95, metalness: 0.0 });
+        const ground = new THREE.Mesh(groundGeo, groundMat);
+        ground.rotation.x = -Math.PI / 2;
+        ground.position.set(0, -0.15, 0.75);
+        ground.receiveShadow = true;
+        scene.add(ground);
+
+        const patchMat = new THREE.MeshStandardMaterial({ color: 0x7a654a, roughness: 0.9, transparent: true, opacity: 0.3 });
+        for (let i = 0; i < 30; i++) {
+            const patch = new THREE.Mesh(new THREE.CircleGeometry(0.4 + Math.random() * 0.8, 6), patchMat);
+            patch.rotation.x = -Math.PI / 2;
+            patch.position.set((Math.random() - 0.5) * 20, -0.14, (Math.random() - 0.5) * 20 + 0.75);
+            scene.add(patch);
+        }
+
+        // ----- ÁRVORES -----
+        function createTree(x, z, scale = 1) {
+            const group = new THREE.Group();
+            const trunkMat = new THREE.MeshStandardMaterial({ color: 0x6b4a3a, roughness: 0.9 });
+            const trunk = new THREE.Mesh(new THREE.CylinderGeometry(0.10 * scale, 0.16 * scale, 0.8 * scale, 6), trunkMat);
+            trunk.position.y = 0.4 * scale;
+            trunk.castShadow = true;
+            group.add(trunk);
+            const leafMat = new THREE.MeshStandardMaterial({ color: 0x3a7a3a, roughness: 0.8 });
+            const leafMatLight = new THREE.MeshStandardMaterial({ color: 0x4a8a4a, roughness: 0.8 });
+            const leafMatDark = new THREE.MeshStandardMaterial({ color: 0x2a6a2a, roughness: 0.8 });
+            const main = new THREE.Mesh(new THREE.SphereGeometry(0.6 * scale, 7, 7), leafMat);
+            main.position.set(0, 1.0 * scale + 0.2 * scale, 0);
+            main.castShadow = true;
+            group.add(main);
+            const offsets = [
+                [0.55, 0.1, 0.4], [-0.55, 0.1, -0.3], [0.3, -0.1, 0.7],
+                [-0.3, -0.1, -0.6], [0.5, 0.2, -0.5], [-0.5, 0.2, 0.5], [0.0, 0.25, 0.0]
+            ];
+            offsets.forEach(([dx, dy, dz]) => {
+                const size = 0.35 + Math.random() * 0.25;
+                const mat = Math.random() > 0.5 ? leafMatLight : leafMatDark;
+                const sphere = new THREE.Mesh(new THREE.SphereGeometry(size * scale, 6, 6), mat);
+                sphere.position.set(dx * scale, (1.0 + dy) * scale + 0.2 * scale, dz * scale);
+                sphere.castShadow = true;
+                group.add(sphere);
+            });
+            for (let i = 0; i < 5; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const rad = 0.4 + Math.random() * 0.3;
+                const size = 0.2 + Math.random() * 0.2;
+                const sphere = new THREE.Mesh(
+                    new THREE.SphereGeometry(size * scale, 5, 5),
+                    Math.random() > 0.5 ? leafMat : leafMatLight
+                );
+                sphere.position.set(
+                    Math.cos(angle) * rad * scale,
+                    1.0 * scale + 0.2 * scale + Math.sin(angle * 2) * 0.15 * scale,
+                    Math.sin(angle) * rad * scale
+                );
+                sphere.castShadow = true;
+                group.add(sphere);
+            }
+            group.position.set(x, -0.15, z);
+            return group;
+        }
+
+        const treePositions = [];
+        const centerX = 0, centerZ = 0.75, minRadius = 5.0;
+        for (let i = 0; i < 30; i++) {
+            let placed = false;
+            for (let attempt = 0; attempt < 100 && !placed; attempt++) {
+                let angle = Math.random() * Math.PI * 2;
+                let radius = minRadius + Math.random() * 4.5;
+                let x = Math.cos(angle) * radius;
+                let z = Math.sin(angle) * radius + centerZ;
+                if (Math.hypot(x - centerX, z - centerZ) < minRadius) continue;
+                let collides = false;
+                for (let t of treePositions) {
+                    if (Math.hypot(t.x - x, t.z - z) < 1.5) { collides = true; break; }
+                }
+                if (collides) continue;
+                treePositions.push({ x, z, scale: 0.8 + Math.random() * 0.7 });
+                placed = true;
+            }
+        }
+        for (let i = 0; i < 25; i++) {
+            let placed = false;
+            for (let attempt = 0; attempt < 100 && !placed; attempt++) {
+                let angle = Math.random() * Math.PI * 2;
+                let radius = 8 + Math.random() * 6;
+                let x = Math.cos(angle) * radius;
+                let z = Math.sin(angle) * radius + centerZ;
+                if (Math.hypot(x - centerX, z - centerZ) < minRadius) continue;
+                let collides = false;
+                for (let t of treePositions) {
+                    if (Math.hypot(t.x - x, t.z - z) < 1.5) { collides = true; break; }
+                }
+                if (collides) continue;
+                treePositions.push({ x, z, scale: 0.6 + Math.random() * 0.6 });
+                placed = true;
+            }
+        }
+        treePositions.forEach(pos => { scene.add(createTree(pos.x, pos.z, pos.scale)); });
+
+        // ----- LUZ -----
+        const ambient = new THREE.AmbientLight(0x8a9a8a, 0.5);
+        scene.add(ambient);
+        const sunLight = new THREE.DirectionalLight(0xfff5e6, 0.9);
+        sunLight.position.set(5, 10, 3);
+        sunLight.castShadow = true;
+        sunLight.shadow.mapSize.width = 1024;
+        sunLight.shadow.mapSize.height = 1024;
+        sunLight.shadow.camera.near = 1;
+        sunLight.shadow.camera.far = 25;
+        sunLight.shadow.camera.left = -10;
+        sunLight.shadow.camera.right = 10;
+        sunLight.shadow.camera.top = 10;
+        sunLight.shadow.camera.bottom = -10;
+        scene.add(sunLight);
+        const fillLight = new THREE.DirectionalLight(0xcce0ff, 0.4);
+        fillLight.position.set(-3, 4, -2);
+        scene.add(fillLight);
+
+        // ============================================================
+        // TABULEIRO
+        // ============================================================
+        const segments = [];
+        const addSeg = (x1, z1, x2, z2) => segments.push({ p1: new THREE.Vector3(x1, 0, z1), p2: new THREE.Vector3(x2, 0, z2) });
+        for (let x = -2; x <= 2; x++) addSeg(x, -2, x, 2);
+        for (let z = -2; z <= 2; z++) addSeg(-2, z, 2, z);
+        addSeg(-2, -2, 2, 2);
+        addSeg(-2, 2, 2, -2);
+        addSeg(-2, 0, 0, 2);
+        addSeg(0, 2, 2, 0);
+        addSeg(2, 0, 0, -2);
+        addSeg(0, -2, -2, 0);
+        const L = 2.0,
+            h = L * Math.sqrt(3) / 2;
+        const baseZ = 2 + h;
+        const half = L / 2;
+        const topo = new THREE.Vector3(0, 0, 2);
+        const baseEsq = new THREE.Vector3(-half, 0, baseZ);
+        const baseDir = new THREE.Vector3(half, 0, baseZ);
+        addSeg(topo.x, topo.z, baseEsq.x, baseEsq.z);
+        addSeg(topo.x, topo.z, baseDir.x, baseDir.z);
+        addSeg(baseEsq.x, baseEsq.z, baseDir.x, baseDir.z);
+        addSeg(topo.x, topo.z, 0, baseZ);
+        const meioZ = (2 + baseZ) / 2;
+        const t = (meioZ - 2) / (baseZ - 2);
+        const meioEsqX = t * (-1);
+        const meioDirX = t * 1;
+        addSeg(0, meioZ, meioEsqX, meioZ);
+        addSeg(0, meioZ, meioDirX, meioZ);
+
+        const intersectSeg = (p1, p2, p3, p4) => {
+            const d = (p1.x - p2.x) * (p3.z - p4.z) - (p1.z - p2.z) * (p3.x - p4.x);
+            if (Math.abs(d) < 1e-8) return null;
+            const t = ((p1.x - p3.x) * (p3.z - p4.z) - (p1.z - p3.z) * (p3.x - p4.x)) / d;
+            const u = -((p1.x - p2.x) * (p1.z - p3.z) - (p1.z - p2.z) * (p1.x - p3.x)) / d;
+            if (t >= 0 && t <= 1 && u >= 0 && u <= 1)
+                return new THREE.Vector3(p1.x + t * (p2.x - p1.x), 0, p1.z + t * (p2.z - p1.z));
+            return null;
+        };
+        const pointsMap = new Map();
+        const addPoint = (p) => {
+            const key = Math.round(p.x / 1e-6) + ',' + Math.round(p.z / 1e-6);
+            if (!pointsMap.has(key)) pointsMap.set(key, p.clone());
+        };
+        segments.forEach(seg => { addPoint(seg.p1);
+            addPoint(seg.p2); });
+        for (let i = 0; i < segments.length; i++)
+            for (let j = i + 1; j < segments.length; j++) {
+                const inter = intersectSeg(segments[i].p1, segments[i].p2, segments[j].p1, segments[j].p2);
+                if (inter) addPoint(inter);
+            }
+        let vertices = Array.from(pointsMap.values());
+        vertices.sort((a, b) => (a.z !== b.z) ? a.z - b.z : a.x - b.x);
+        const vertexPos = vertices.map(v => v.clone());
+
+        const adj = Array(vertices.length).fill().map(() => []);
+        for (let i = 0; i < vertices.length; i++) {
+            for (let j = i + 1; j < vertices.length; j++) {
+                const dx = vertices[i].x - vertices[j].x;
+                const dz = vertices[i].z - vertices[j].z;
+                if (Math.hypot(dx, dz) < 1.9) {
+                    adj[i].push(j);
+                    adj[j].push(i);
+                }
+            }
+        }
+
+        const toca = {
+            22: [25, 26, 27],
+            25: [22, 26, 28],
+            26: [22, 25, 27, 29],
+            27: [22, 26, 30],
+            28: [25, 29],
+            29: [26, 28, 30],
+            30: [27, 29]
+        };
+        const isDiagonal = (from, to) => {
+            const dx = Math.abs(vertexPos[to].x - vertexPos[from].x);
+            const dz = Math.abs(vertexPos[to].z - vertexPos[from].z);
+            return Math.abs(dx - dz) < 0.01 && dx > 0.01;
+        };
+
+        function canMoveNormal(piece, from, to, occupied) {
+            if (from === to) return false;
+            if (occupied.has(to)) return false;
+            const inToca = (idx) => idx >= 25 && idx <= 30;
+            const fromToca = inToca(from);
+            const toToca = inToca(to);
+            if (fromToca || toToca) {
+                if (toToca && !fromToca && from !== 22) return false;
+                if (fromToca && !toToca && to !== 22) return false;
+                return toca[from]?.includes(to) || toca[to]?.includes(from);
+            }
+            if (!adj[from].includes(to)) return false;
+            if (isDiagonal(from, to) && (from % 2 !== 0)) return false;
+            return true;
+        }
+        const validJumps = new Map();
+
+        function addJump(from, over, to) {
+            if (!validJumps.has(from)) validJumps.set(from, new Map());
+            validJumps.get(from).set(to, over);
+        }
+        addJump(30, 29, 28);
+        addJump(30, 27, 22);
+        addJump(29, 26, 22);
+        addJump(28, 25, 22);
+        addJump(28, 29, 30);
+        addJump(27, 22, 16);
+        addJump(27, 26, 25);
+        addJump(26, 22, 17);
+        addJump(25, 22, 18);
+        addJump(25, 26, 27);
+        addJump(22, 27, 30);
+        addJump(22, 26, 29);
+        addJump(22, 25, 28);
+        addJump(16, 22, 27);
+        addJump(17, 22, 26);
+        addJump(18, 22, 25);
+        for (let i = 0; i < vertices.length; i++) {
+            if (i >= 25 && i <= 30) continue;
+            for (let j = i + 1; j < vertices.length; j++) {
+                if (j >= 25 && j <= 30) continue;
+                const p1 = vertexPos[i];
+                const p2 = vertexPos[j];
+                const dx = p2.x - p1.x;
+                const dz = p2.z - p1.z;
+                const midX = p1.x + dx / 2;
+                const midZ = p1.z + dz / 2;
+                for (let k = 0; k < vertices.length; k++) {
+                    if (k === i || k === j) continue;
+                    const pk = vertexPos[k];
+                    if (Math.abs(pk.x - midX) < 0.05 && Math.abs(pk.z - midZ) < 0.05) {
+                        if (adj[i].includes(k) && adj[k].includes(j)) {
+                            if (!validJumps.has(i) || !validJumps.get(i).has(j)) {
+                                addJump(i, k, j);
+                                addJump(j, k, i);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        function removeDiagonalJumpsFromOdd() {
+            const toDelete = [];
+            for (let [from, map] of validJumps.entries()) {
+                if (from % 2 !== 0) {
+                    for (let [to, over] of map.entries()) {
+                        if (isDiagonal(from, to)) {
+                            toDelete.push({ from, to });
+                        }
+                    }
+                }
+            }
+            for (let { from, to } of toDelete) {
+                validJumps.get(from).delete(to);
+                if (validJumps.get(from).size === 0) {
+                    validJumps.delete(from);
+                }
+            }
+        }
+        removeDiagonalJumpsFromOdd();
+
+        function canJump(jaguarFrom, jaguarTo, dogPos, occupied) {
+            if (dogPos === undefined) return false;
+            if (occupied.has(jaguarTo)) return false;
+            const jumpMap = validJumps.get(jaguarFrom);
+            if (!jumpMap) return false;
+            const requiredDog = jumpMap.get(jaguarTo);
+            if (requiredDog === undefined) return false;
+            return dogPos === requiredDog;
+        }
+
+        // ============================================================
+        // MODELOS (onça e cachorros)
+        // ============================================================
+        function createJaguarTexture() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512;
+            canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#d97c2b';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            const spots = [
+                { x: 120, y: 80, r: 35 }, { x: 300, y: 150, r: 45 }, { x: 450, y: 70, r: 30 },
+                { x: 80, y: 280, r: 40 }, { x: 220, y: 350, r: 38 }, { x: 400, y: 300, r: 42 },
+                { x: 520, y: 250, r: 35 }, { x: 150, y: 470, r: 32 }, { x: 350, y: 450, r: 40 },
+                { x: 480, y: 420, r: 36 }, { x: 60, y: 120, r: 28 }, { x: 420, y: 180, r: 33 },
+                { x: 280, y: 250, r: 30 }, { x: 180, y: 200, r: 25 }, { x: 490, y: 360, r: 29 },
+                { x: 90, y: 390, r: 27 }, { x: 320, y: 420, r: 31 }, { x: 440, y: 490, r: 26 },
+                { x: 250, y: 70, r: 22 }, { x: 380, y: 520, r: 24 },
+            ];
+            spots.forEach(spot => {
+                ctx.beginPath();
+                ctx.arc(spot.x, spot.y, spot.r, 0, Math.PI * 2);
+                ctx.fillStyle = '#5a3a1a';
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(spot.x - 5, spot.y - 3, spot.r * 0.55, 0, Math.PI * 2);
+                ctx.fillStyle = '#b87a3a';
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(spot.x + 8, spot.y + 6, spot.r * 0.25, 0, Math.PI * 2);
+                ctx.fillStyle = '#3a2a1a';
+                ctx.fill();
+            });
+            for (let i = 0; i < 180; i++) {
+                const x = Math.random() * canvas.width;
+                const y = Math.random() * canvas.height;
+                const rad = 4 + Math.random() * 12;
+                ctx.beginPath();
+                ctx.arc(x, y, rad, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(50, 30, 15, ' + (0.6 + Math.random() * 0.4) + ')';
+                ctx.fill();
+                if (Math.random() > 0.6) {
+                    ctx.beginPath();
+                    ctx.arc(x - 2, y - 2, rad * 0.4, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(200, 140, 70, 0.7)';
+                    ctx.fill();
+                }
+            }
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping;
+            texture.repeat.set(1, 1);
+            return texture;
+        }
+        const jaguarShape = [
+            [0.04, 0], [-0.03, 0.16], [0, 0.38], [-0.02, 0.5], [-0.03, 0.5], [-0.05, 0.48], [-0.07, 0.45], [-0.09, 0.42],
+            [-0.11, 0.28], [-0.13, 0.22], [-0.15, 0.16], [-0.19, 0.15], [-0.21, 0.155], [-0.23, 0.17], [-0.23, 0.19],
+            [-0.20, 0.18], [-0.18, 0.23], [-0.16, 0.28], [-0.14, 0.42], [-0.12, 0.45], [-0.10, 0.48], [-0.08, 0.51],
+            [-0.06, 0.54], [-0.02, 0.57], [0.02, 0.6], [0.06, 0.62], [0.70, 0.68], [0.85, 0.73], [1.0, 0.7], [1.14, 0.75],
+            [1.17, 0.78], [1.20, 0.78], [1.23, 0.75], [1.31, 0.7], [1.33, 0.67], [1.40, 0.64], [1.40, 0.54], [1.26, 0.54],
+            [1.12, 0.52], [1.00, 0.4], [0.97, 0.03], [1.00, 0.02], [1.00, 0], [0.90, 0], [0.85, 0.30], [0.50, 0.27],
+            [0.20, 0.30], [0.06, 0.16], [0.123, 0.03], [0.15, 0.02], [0.15, 0]
+        ];
+        const dogShape = [
+            [0, 0], [0, 0.6], [0.06, 0.47], [0.7, 0.55], [0.8, 0.8], [0.85, 0.73], [1.1, 0.6], [1.1, 0.5],
+            [0.9, 0.5], [0.8, 0.4], [0.8, 0], [0.7, 0], [0.7, 0.2], [0.1, 0.2], [0.1, 0]
+        ];
+
+        function makeMeshWithTexture(points, texture, scale, rotY) {
+            const shape = new THREE.Shape();
+            shape.moveTo(points[0][0], points[0][1]);
+            for (let i = 1; i < points.length; i++) shape.lineTo(points[i][0], points[i][1]);
+            shape.closePath();
+            const geo = new THREE.ExtrudeGeometry(shape, { depth: 0.22, bevelEnabled: true, bevelThickness: 0.02, bevelSize: 0.02 });
+            geo.computeBoundingBox();
+            const box = geo.boundingBox;
+            geo.translate(-(box.min.x + box.max.x) / 2, -box.min.y, -(box.min.z + box.max.z) / 2);
+            const material = new THREE.MeshStandardMaterial({ map: texture, roughness: 0.4, metalness: 0.1 });
+            const mesh = new THREE.Mesh(geo, material);
+            mesh.scale.set(scale, scale, scale);
+            mesh.rotation.y = rotY;
+            mesh.castShadow = true;
+            return mesh;
+        }
+        const onca = makeMeshWithTexture(jaguarShape, createJaguarTexture(), 0.36, -Math.PI / 2);
+        scene.add(onca);
+        onca.userData = { type: 'onca' };
+
+        const dogBaseGeo = (() => {
+            const shape = new THREE.Shape();
+            shape.moveTo(dogShape[0][0], dogShape[0][1]);
+            for (let i = 1; i < dogShape.length; i++) shape.lineTo(dogShape[i][0], dogShape[i][1]);
+            shape.closePath();
+            const geo = new THREE.ExtrudeGeometry(shape, { depth: 0.22, bevelEnabled: true, bevelThickness: 0.02, bevelSize: 0.02 });
+            geo.computeBoundingBox();
+            const box = geo.boundingBox;
+            geo.translate(-(box.min.x + box.max.x) / 2, -box.min.y, -(box.min.z + box.max.z) / 2);
+            return geo;
+        })();
+
+        function createDog(color, scale) {
+            const material = new THREE.MeshStandardMaterial({ color, metalness: 0.2, roughness: 0.55 });
+            const mesh = new THREE.Mesh(dogBaseGeo, material);
+            mesh.scale.set(scale, scale, scale);
+            mesh.rotation.y = -Math.PI / 2;
+            mesh.castShadow = true;
+            return mesh;
+        }
+
+        // ============================================================
+        // IA - profundidade 4 com penalidade extrema e randomismo anti-loop
+        // ============================================================
+        let ultimoCachorro = -1;
+        let contadorRepeticao = 0;
+
+        function cloneState(state) {
+            return {
+                oncaIdx: state.oncaIdx,
+                dogPositions: [...state.dogPositions],
+                capturas: state.capturas,
+                turno: state.turno
+            };
+        }
+
+        function gerarMovimentos(state, turno) {
+            const movimentos = [];
+            const occupied = new Set(state.dogPositions);
+            occupied.add(state.oncaIdx);
+
+            if (turno === 'onca') {
+                for (let dest = 0; dest < vertices.length; dest++) {
+                    if (dest === state.oncaIdx) continue;
+                    if (canMoveNormal('onca', state.oncaIdx, dest, occupied)) {
+                        movimentos.push({ from: state.oncaIdx, to: dest, type: 'normal', turno: 'onca' });
+                    }
+                    for (let i = 0; i < state.dogPositions.length; i++) {
+                        const dogPos = state.dogPositions[i];
+                        if (canJump(state.oncaIdx, dest, dogPos, occupied)) {
+                            movimentos.push({ from: state.oncaIdx, to: dest, type: 'capture', dogIndex: i, turno: 'onca' });
+                            break;
+                        }
+                    }
+                }
+            } else {
+                for (let i = 0; i < state.dogPositions.length; i++) {
+                    const from = state.dogPositions[i];
+                    for (let dest = 0; dest < vertices.length; dest++) {
+                        if (dest === from) continue;
+                        if (canMoveNormal('dog', from, dest, occupied)) {
+                            movimentos.push({ from: i, to: dest, type: 'normal', turno: 'dog' });
+                        }
+                    }
+                }
+            }
+            return movimentos;
+        }
+
+        function aplicarMovimento(state, movimento) {
+            const novo = cloneState(state);
+            if (movimento.turno === 'onca') {
+                novo.oncaIdx = movimento.to;
+                if (movimento.type === 'capture') {
+                    novo.dogPositions.splice(movimento.dogIndex, 1);
+                    novo.capturas++;
+                }
+                novo.turno = 'dog';
+            } else {
+                novo.dogPositions[movimento.from] = movimento.to;
+                novo.turno = 'onca';
+            }
+            return novo;
+        }
+
+        function estadoTerminal(state) {
+            if (state.capturas >= 5) return 'onca';
+            const moves = gerarMovimentos(state, 'onca');
+            if (moves.length === 0) return 'dogs';
+            return null;
+        }
+
+        function contaMovimentosOnca(state) {
+            const occ = new Set(state.dogPositions);
+            occ.add(state.oncaIdx);
+            let count = 0;
+            for (let d = 0; d < vertices.length; d++) {
+                if (d === state.oncaIdx) continue;
+                if (canMoveNormal('onca', state.oncaIdx, d, occ)) count++;
+                for (let i = 0; i < state.dogPositions.length; i++) {
+                    if (canJump(state.oncaIdx, d, state.dogPositions[i], occ)) { count++; break; }
+                }
+            }
+            return count;
+        }
+
+        function avaliarTabuleiro(state) {
+            let score = 0;
+            const oncaPos = state.oncaIdx;
+            const dogs = state.dogPositions;
+            const movOnca = contaMovimentosOnca(state);
+
+            score += state.capturas * 500;
+            const centro = 12;
+            const distCentro = Math.abs(oncaPos - centro);
+            score += (10 - distCentro) * 3;
+            score -= movOnca * 50;
+            if (movOnca === 0) score -= 500;
+            else if (movOnca === 1) score -= 200;
+
+            const vizinhos = adj[oncaPos] || [];
+            let cercando = 0;
+            for (let v of vizinhos) {
+                if (dogs.includes(v)) cercando++;
+            }
+            score -= cercando * 25;
+
+            const bordaZ = Math.abs(vertexPos[oncaPos].z - 2.5);
+            const bordaX = Math.abs(vertexPos[oncaPos].x - 2.5);
+            const proximidadeBorda = Math.max(bordaZ, bordaX);
+            score -= proximidadeBorda * 10;
+
+            for (let i = 0; i < dogs.length; i++) {
+                const dogPos = dogs[i];
+                let vulneravel = false;
+                const occ = new Set(dogs);
+                occ.add(oncaPos);
+                for (let dest = 0; dest < vertices.length; dest++) {
+                    if (canJump(oncaPos, dest, dogPos, occ)) { vulneravel = true; break; }
+                }
+                if (vulneravel) score -= 15;
+            }
+
+            let somaZ = 0;
+            for (let i = 0; i < dogs.length; i++) {
+                somaZ += vertexPos[dogs[i]].z;
+            }
+            const mediaZ = dogs.length > 0 ? somaZ / dogs.length : 0;
+            score -= mediaZ * 3;
+
+            return score;
+        }
+
+        function minimax(state, profundidade, alpha, beta, isMaximizing) {
+            const terminal = estadoTerminal(state);
+            if (terminal === 'onca') return 10000 + profundidade;
+            if (terminal === 'dogs') return -10000 - profundidade;
+            if (profundidade === 0) return avaliarTabuleiro(state);
+
+            const turno = state.turno;
+            const movimentos = gerarMovimentos(state, turno);
+            if (movimentos.length === 0) {
+                return turno === 'onca' ? -10000 : 10000;
+            }
+
+            if (turno === 'onca') {
+                movimentos.sort((a, b) => {
+                    if (a.type === 'capture' && b.type !== 'capture') return -1;
+                    if (b.type === 'capture' && a.type !== 'capture') return 1;
+                    return 0;
+                });
+            } else {
+                movimentos.sort((a, b) => {
+                    const simA = aplicarMovimento(state, a);
+                    const simB = aplicarMovimento(state, b);
+                    const mobA = contaMovimentosOnca(simA);
+                    const mobB = contaMovimentosOnca(simB);
+                    return mobA - mobB;
+                });
+            }
+
+            if (isMaximizing) {
+                let maxEval = -Infinity;
+                for (let mov of movimentos) {
+                    const novoState = aplicarMovimento(state, mov);
+                    const eval_ = minimax(novoState, profundidade - 1, alpha, beta, false);
+                    maxEval = Math.max(maxEval, eval_);
+                    alpha = Math.max(alpha, eval_);
+                    if (beta <= alpha) break;
+                }
+                return maxEval;
+            } else {
+                let minEval = Infinity;
+                for (let mov of movimentos) {
+                    const novoState = aplicarMovimento(state, mov);
+                    const eval_ = minimax(novoState, profundidade - 1, alpha, beta, true);
+                    minEval = Math.min(minEval, eval_);
+                    beta = Math.min(beta, eval_);
+                    if (beta <= alpha) break;
+                }
+                return minEval;
+            }
+        }
+
+        function melhorMovimento(state, turno, profundidade = 4) {
+            const movimentos = gerarMovimentos(state, turno);
+            if (movimentos.length === 0) return null;
+
+            if (turno === 'onca') {
+                movimentos.sort((a, b) => {
+                    if (a.type === 'capture' && b.type !== 'capture') return -1;
+                    if (b.type === 'capture' && a.type !== 'capture') return 1;
+                    return 0;
+                });
+            } else {
+                movimentos.sort((a, b) => {
+                    const simA = aplicarMovimento(state, a);
+                    const simB = aplicarMovimento(state, b);
+                    const mobA = contaMovimentosOnca(simA);
+                    const mobB = contaMovimentosOnca(simB);
+                    return mobA - mobB;
+                });
+            }
+
+            let bestMove = movimentos[0];
+            let bestScore = turno === 'onca' ? -Infinity : Infinity;
+            const isMaximizing = turno === 'onca';
+
+            for (let mov of movimentos) {
+                const novoState = aplicarMovimento(state, mov);
+                const score = minimax(novoState, profundidade - 1, -Infinity, Infinity, !isMaximizing);
+                if (isMaximizing) {
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestMove = mov;
+                    }
+                } else {
+                    if (score < bestScore) {
+                        bestScore = score;
+                        bestMove = mov;
+                    }
+                }
+            }
+            return bestMove;
+        }
+
+        // ============================================================
+        // ESTADO DO JOGO E CONTROLE
+        // ============================================================
+        let oncaIdx = 12;
+        let dogPositions = [];
+        let dogMeshes = [];
+        let capturasOnca = 0;
+        let jogoAtivo = true;
+        let turno = 'onca';
+        let movendo = false;
+        let animFrameId = null;
+        let animStart = new THREE.Vector3();
+        let animEnd = new THREE.Vector3();
+        let animInicio = 0;
+        let animPiece = null;
+        let novoIdx = -1;
+        let capturedDogIndex = -1;
+        let selectedDogIndex = null;
+        const DOG_COUNT = 14;
+        let gameEnded = false;
+        let gameMode = 'pvp';
+
+        function initDogs() {
+            dogMeshes.forEach(mesh => scene.remove(mesh));
+            dogMeshes = [];
+            const initialIndices = [];
+            for (let i = 0; i <= 14; i++) {
+                if (i !== 12 && i !== oncaIdx) initialIndices.push(i);
+            }
+            while (initialIndices.length < DOG_COUNT) {
+                for (let i = 15; i < vertices.length && initialIndices.length < DOG_COUNT; i++) {
+                    if (!initialIndices.includes(i) && i !== oncaIdx) initialIndices.push(i);
+                }
+            }
+            dogPositions = initialIndices.slice(0, DOG_COUNT);
+            for (let i = 0; i < DOG_COUNT; i++) {
+                const dog = createDog(0x4A2A12, 0.32);
+                const pos = vertexPos[dogPositions[i]];
+                dog.position.set(pos.x, 0.11, pos.z);
+                dog.userData = { type: 'dog', index: i };
+                scene.add(dog);
+                dogMeshes.push(dog);
+            }
+            atualizarContador();
+        }
+
+        function ocupadas() {
+            const s = new Set();
+            s.add(oncaIdx);
+            dogPositions.forEach(pos => s.add(pos));
+            return s;
+        }
+
+        function movimentosValidosOnca(dest) {
+            const occ = ocupadas();
+            occ.delete(oncaIdx);
+            if (canMoveNormal('onca', oncaIdx, dest, occ)) return true;
+            for (let i = 0; i < dogPositions.length; i++) {
+                const dogPos = dogPositions[i];
+                if (canJump(oncaIdx, dest, dogPos, occ)) return true;
+            }
+            return false;
+        }
+
+        function movimentosValidosCachorro(dogPos, dest) {
+            const occ = ocupadas();
+            occ.delete(dogPos);
+            return canMoveNormal('dog', dogPos, dest, occ);
+        }
+
+        function oncaTemMovimentos() {
+            for (let i = 0; i < vertices.length; i++) {
+                if (movimentosValidosOnca(i)) return true;
+            }
+            return false;
+        }
+
+        function atualizarVisual() {
+            if (!jogoAtivo) return;
+            onca.position.set(vertexPos[oncaIdx].x, 0.11, vertexPos[oncaIdx].z);
+            for (let i = 0; i < dogMeshes.length; i++) {
+                const pos = vertexPos[dogPositions[i]];
+                dogMeshes[i].position.set(pos.x, 0.11, pos.z);
+                if (turno === 'dog' && selectedDogIndex === i) {
+                    dogMeshes[i].material.emissive = new THREE.Color(0xaa8844);
+                    dogMeshes[i].material.emissiveIntensity = 0.5;
+                } else {
+                    dogMeshes[i].material.emissiveIntensity = 0;
+                }
+            }
+            document.getElementById('current-turn').innerText = turno === 'onca' ? 'ONÇA' : 'CACHORRO';
+            atualizarContador();
+            document.getElementById('captures').innerText = capturasOnca;
+        }
+
+        function atualizarContador() {
+            document.getElementById('dogs-left').innerText = dogPositions.length;
+        }
+
+        function verificarFimJogo() {
+            if (!jogoAtivo) return true;
+            if (capturasOnca >= 5) {
+                mostrarMsg(" VITÓRIA DA ONÇA! ", false);
+                document.getElementById('turn-indicator').innerHTML = "🏆 FIM DE JOGO - ONÇA VENCEU 🏆";
+                jogoAtivo = false;
+                if (!gameEnded) {
+                    gameEnded = true;
+                    if (window.parent !== window) {
+                        window.parent.postMessage({ type: 'gameover', winner: 'onca' }, '*');
+                    }
+                }
+                return true;
+            }
+            if (!oncaTemMovimentos()) {
+                mostrarMsg(" VITÓRIA DOS CACHORROS! ", false);
+                document.getElementById('turn-indicator').innerHTML = "🏆 FIM DE JOGO - CACHORROS VENCERAM 🏆";
+                jogoAtivo = false;
+                if (!gameEnded) {
+                    gameEnded = true;
+                    if (window.parent !== window) {
+                        window.parent.postMessage({ type: 'gameover', winner: 'dogs' }, '*');
+                    }
+                }
+                return true;
+            }
+            return false;
+        }
+
+        function iniciarMovimento(piece, from, to, captureInfo = null) {
+            if (movendo || !jogoAtivo) return;
+            movendo = true;
+            animPiece = piece;
+            novoIdx = to;
+            capturedDogIndex = captureInfo ? captureInfo.dogIndex : -1;
+            animStart.copy(vertexPos[from]);
+            animEnd.copy(vertexPos[to]);
+            animInicio = performance.now();
+            if (animFrameId) cancelAnimationFrame(animFrameId);
+            animFrameId = requestAnimationFrame(animarMovimento);
+        }
+
+        function animarMovimento(now) {
+            if (!movendo) return;
+            const elapsed = now - animInicio;
+            let t = Math.min(1, elapsed / 250);
+            t = 1 - Math.pow(1 - t, 3);
+            const target = animPiece === 'onca' ? onca : dogMeshes[animPiece.index];
+            target.position.lerpVectors(animStart, animEnd, t);
+            if (t >= 1) {
+                if (animPiece === 'onca') {
+                    oncaIdx = novoIdx;
+                    if (capturedDogIndex !== -1) {
+                        dogPositions.splice(capturedDogIndex, 1);
+                        scene.remove(dogMeshes[capturedDogIndex]);
+                        dogMeshes.splice(capturedDogIndex, 1);
+                        for (let i = capturedDogIndex; i < dogMeshes.length; i++) dogMeshes[i].userData.index = i;
+                        if (selectedDogIndex !== null && selectedDogIndex >= dogMeshes.length) selectedDogIndex = null;
+                        capturasOnca++;
+                        document.getElementById('captures').innerText = capturasOnca;
+                    }
+                    turno = 'dog';
+                    selectedDogIndex = null;
+                } else {
+                    // Atualiza o cachorro que foi movido
+                    const dogIdx = animPiece.index;
+                    dogPositions[dogIdx] = novoIdx;
+                    turno = 'onca';
+                    selectedDogIndex = null;
+
+                    // Atualiza o controle de repetição
+                    if (dogIdx === ultimoCachorro) {
+                        contadorRepeticao++;
+                    } else {
+                        ultimoCachorro = dogIdx;
+                        contadorRepeticao = 1;
+                    }
+                }
+                atualizarVisual();
+                movendo = false;
+                animFrameId = null;
+
+                const fim = verificarFimJogo();
+                if (!fim && jogoAtivo) {
+                    realcarMovimentos();
+                    agendarIA();
+                } else {
+                    discos.forEach(d => { if (d.material) d.material.emissiveIntensity = 0; });
+                }
+            } else {
+                animFrameId = requestAnimationFrame(animarMovimento);
+            }
+        }
+
+        function realcarMovimentos() {
+            discos.forEach(d => {
+                if (d.material) {
+                    d.material.emissiveIntensity = 0;
+                    d.material.color.setHex(0x111111);
+                }
+            });
+            if (!jogoAtivo) return;
+            if ((gameMode === 'cpu_onca' && turno === 'dog') || (gameMode === 'cpu_dog' && turno === 'onca')) {
+                return;
+            }
+            const validos = [];
+            if (turno === 'onca') {
+                for (let i = 0; i < vertices.length; i++)
+                    if (movimentosValidosOnca(i)) validos.push(i);
+            } else if (selectedDogIndex !== null) {
+                const dogPos = dogPositions[selectedDogIndex];
+                for (let i = 0; i < vertices.length; i++)
+                    if (movimentosValidosCachorro(dogPos, i)) validos.push(i);
+            }
+            validos.forEach(idx => {
+                discos.filter(d => d.userData?.vertex === idx).forEach(d => {
+                    d.material.emissive = new THREE.Color(0x88aa44);
+                    d.material.emissiveIntensity = 0.6;
+                    d.material.color.setHex(0xaa8844);
+                });
+            });
+        }
+
+        function mostrarMsg(texto, erro) {
+            const div = document.createElement('div');
+            div.className = 'move-hint';
+            div.textContent = texto;
+            div.style.background = erro ? 'rgba(100,30,20,0.9)' : 'rgba(30,60,40,0.9)';
+            document.body.appendChild(div);
+            setTimeout(() => div.remove(), 1500);
+        }
+
+        // ============================================================
+        // IA agendada com randomismo anti-loop
+        // ============================================================
+        function agendarIA() {
+            if (!jogoAtivo) return;
+            let iaTurno = null;
+            if (gameMode === 'cpu_onca' && turno === 'dog') iaTurno = 'dog';
+            if (gameMode === 'cpu_dog' && turno === 'onca') iaTurno = 'onca';
+            if (iaTurno === null) return;
+
+            setTimeout(() => {
+                if (!jogoAtivo || turno !== iaTurno) return;
+
+                const state = {
+                    oncaIdx: oncaIdx,
+                    dogPositions: [...dogPositions],
+                    capturas: capturasOnca,
+                    turno: turno
+                };
+
+                let movimento = null;
+
+                // Se for turno dos cachorros e o mesmo cachorro foi repetido 3 vezes
+                if (iaTurno === 'dog' && contadorRepeticao >= 3) {
+                    // Força escolha aleatória entre os cachorros com movimentos legais
+                    const todosMovimentos = gerarMovimentos(state, 'dog');
+                    if (todosMovimentos.length > 0) {
+                        // Filtra movimentos que não sejam do mesmo cachorro repetido
+                        const outros = todosMovimentos.filter(m => m.from !== ultimoCachorro);
+                        if (outros.length > 0) {
+                            // Escolhe um aleatório entre os que reduzem mais a mobilidade
+                            outros.sort((a, b) => {
+                                const simA = aplicarMovimento(state, a);
+                                const simB = aplicarMovimento(state, b);
+                                const mobA = contaMovimentosOnca(simA);
+                                const mobB = contaMovimentosOnca(simB);
+                                return mobA - mobB;
+                            });
+                            // Pega os 3 melhores e sorteia um
+                            const top = outros.slice(0, Math.min(3, outros.length));
+                            movimento = top[Math.floor(Math.random() * top.length)];
+                            // Reseta o contador para evitar repetição infinita
+                            contadorRepeticao = 0;
+                            ultimoCachorro = -1;
+                        } else {
+                            // Se só tem movimentos do mesmo cachorro, usa o melhor mesmo
+                            movimento = melhorMovimento(state, turno, 4);
+                        }
+                    }
+                } else {
+                    movimento = melhorMovimento(state, turno, 4);
+                }
+
+                if (!movimento) return;
+
+                if (movimento.turno === 'onca') {
+                    const captureInfo = movimento.type === 'capture' ? { dogIndex: movimento.dogIndex } : null;
+                    iniciarMovimento('onca', oncaIdx, movimento.to, captureInfo);
+                } else {
+                    const dogIdx = movimento.from;
+                    if (dogIdx >= 0 && dogIdx < dogPositions.length) {
+                        iniciarMovimento({ type: 'dog', index: dogIdx }, dogPositions[dogIdx], movimento.to, null);
+                    }
+                }
+            }, 300);
+        }
+
+        // ============================================================
+        // DISCOS E LINHAS
+        // ============================================================
+        const discos = [];
+        const discoMat = new THREE.MeshStandardMaterial({ color: 0xD4A373, roughness: 0.4, emissive: 0x442200, emissiveIntensity: 0.15 });
+        vertices.forEach((p, idx) => {
+            const cyl = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 0.025, 20), discoMat);
+            cyl.position.set(p.x, 0.025, p.z);
+            cyl.userData = { vertex: idx };
+            const ring = new THREE.Mesh(new THREE.TorusGeometry(0.105, 0.018, 12, 24), new THREE.MeshStandardMaterial({ color: 0xB87C4F }));
+            ring.rotation.x = Math.PI / 2;
+            ring.position.set(p.x, 0.032, p.z);
+            ring.userData = { vertex: idx };
+            discos.push(cyl, ring);
+            scene.add(cyl);
+            scene.add(ring);
+        });
+
+        const lineGroup = new THREE.Group();
+        segments.forEach(seg => {
+            const pts = [seg.p1.clone(), seg.p2.clone()];
+            pts.forEach(p => p.y = 0.012);
+            const geo = new THREE.BufferGeometry().setFromPoints(pts);
+            const mat = new THREE.LineBasicMaterial({ color: 0x3a2a1a, linewidth: 1 });
+            lineGroup.add(new THREE.Line(geo, mat));
+        });
+        scene.add(lineGroup);
+
+        // ============================================================
+        // ANIMAÇÃO (flutuação)
+        // ============================================================
+        let tempo = 0;
+        function flutuar() {
+            requestAnimationFrame(flutuar);
+            tempo += 0.02;
+            if (!movendo && jogoAtivo) {
+                onca.position.y = vertexPos[oncaIdx].y + 0.11 + Math.sin(tempo * 1.8) * 0.003;
+                for (let i = 0; i < dogMeshes.length; i++) {
+                    dogMeshes[i].position.y = vertexPos[dogPositions[i]].y + 0.11 + Math.sin(tempo * 1.5 + i) * 0.003;
+                }
+            }
+        }
+        flutuar();
+
+        function animar() {
+            requestAnimationFrame(animar);
+            controls.update();
+            renderer.render(scene, camera);
+            labelRenderer.render(scene, camera);
+        }
+        animar();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            labelRenderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // ============================================================
+        // INTERAÇÃO HUMANA
+        // ============================================================
+        const raycaster = new THREE.Raycaster();
+        const pointer = new THREE.Vector2();
+
+        function handlePointerEvent(clientX, clientY) {
+            if (movendo) { mostrarMsg("Aguarde o movimento...", true); return; }
+            if (!jogoAtivo) { mostrarMsg("Jogo acabou! Reinicie.", true); return; }
+            if ((gameMode === 'cpu_onca' && turno === 'dog') || (gameMode === 'cpu_dog' && turno === 'onca')) {
+                mostrarMsg("A CPU está pensando...", true);
+                return;
+            }
+            const rect = renderer.domElement.getBoundingClientRect();
+            pointer.x = ((clientX - rect.left) / rect.width) * 2 - 1;
+            pointer.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+            raycaster.setFromCamera(pointer, camera);
+
+            if (turno === 'dog') {
+                const dogHits = raycaster.intersectObjects(dogMeshes);
+                if (dogHits.length) {
+                    const idx = dogHits[0].object.userData.index;
+                    if (idx !== undefined) {
+                        selectedDogIndex = idx;
+                        mostrarMsg('Cachorro ' + idx + ' selecionado. Toque em uma casa verde para mover.', false);
+                        atualizarVisual();
+                        realcarMovimentos();
+                        return;
+                    }
+                }
+            }
+
+            const hits = raycaster.intersectObjects(discos);
+            if (!hits.length) return;
+            let alvo = null;
+            for (let h of hits) {
+                let obj = h.object;
+                while (obj) {
+                    if (obj.userData && obj.userData.vertex !== undefined) {
+                        alvo = obj.userData.vertex;
+                        break;
+                    }
+                    obj = obj.parent;
+                }
+                if (alvo !== null) break;
+            }
+            if (alvo === null) return;
+
+            if (turno === 'onca') {
+                if (movimentosValidosOnca(alvo)) {
+                    let captureDogIndex = -1;
+                    const occ = ocupadas();
+                    occ.delete(oncaIdx);
+                    for (let i = 0; i < dogPositions.length; i++) {
+                        const dogPos = dogPositions[i];
+                        if (canJump(oncaIdx, alvo, dogPos, occ)) {
+                            captureDogIndex = i;
+                            break;
+                        }
+                    }
+                    iniciarMovimento('onca', oncaIdx, alvo, captureDogIndex !== -1 ? { dogIndex: captureDogIndex } : null);
+                } else {
+                    mostrarMsg("Movimento inválido para a onça!", true);
+                }
+            } else {
+                if (selectedDogIndex === null) {
+                    mostrarMsg("Toque primeiro em um cachorro para selecioná-lo!", true);
+                    return;
+                }
+                const dogPos = dogPositions[selectedDogIndex];
+                if (movimentosValidosCachorro(dogPos, alvo)) {
+                    iniciarMovimento({ type: 'dog', index: selectedDogIndex }, dogPos, alvo, null);
+                } else {
+                    mostrarMsg("Movimento inválido para o cachorro!", true);
+                }
+            }
+        }
+
+        window.addEventListener('click', (e) => handlePointerEvent(e.clientX, e.clientY));
+        window.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            handlePointerEvent(touch.clientX, touch.clientY);
+        });
+
+        // ============================================================
+        // BOTÃO VOLTAR
+        // ============================================================
+        const voltarBtn = document.getElementById('voltar-btn');
+        const confirmModal = document.getElementById('confirm-modal');
+        const confirmSim = document.getElementById('confirm-sim');
+        const confirmNao = document.getElementById('confirm-nao');
+
+        voltarBtn.addEventListener('click', () => { confirmModal.classList.add('visible'); });
+        confirmSim.addEventListener('click', () => {
+            confirmModal.classList.remove('visible');
+            if (window.parent !== window) {
+                window.parent.postMessage({ type: 'voltarMenu' }, '*');
+            }
+        });
+        confirmNao.addEventListener('click', () => { confirmModal.classList.remove('visible'); });
+        confirmModal.addEventListener('click', (e) => { if (e.target === confirmModal) confirmModal.classList.remove('visible'); });
+
+        // ============================================================
+        // MODO DE JOGO
+        // ============================================================
+        window.addEventListener('message', (event) => {
+            if (event.data && event.data.type === 'setMode') {
+                gameMode = event.data.mode || 'pvp';
+                console.log('Modo de jogo definido:', gameMode);
+                reiniciarJogo();
+            }
+        });
+
+        function reiniciarJogo() {
+            dogMeshes.forEach(mesh => scene.remove(mesh));
+            dogMeshes = [];
+            oncaIdx = 12;
+            capturasOnca = 0;
+            jogoAtivo = true;
+            turno = 'onca';
+            movendo = false;
+            selectedDogIndex = null;
+            gameEnded = false;
+            ultimoCachorro = -1;
+            contadorRepeticao = 0;
+            document.getElementById('turn-indicator').innerHTML = 'Turno: <span id="current-turn">ONÇA</span>';
+            initDogs();
+            atualizarVisual();
+            realcarMovimentos();
+            if (gameMode === 'cpu_dog') {
+                setTimeout(() => agendarIA(), 500);
+            }
+        }
+
+        // ============================================================
+        // INICIALIZAÇÃO
+        // ============================================================
+        if (window.parent !== window) {
+            window.parent.postMessage({ type: 'getMode' }, '*');
+        }
+
+        initDogs();
+        atualizarVisual();
+        realcarMovimentos();
+        console.log("Jogo iniciado. Modo:", gameMode);
+    <\/script>
+</body>
+</html>`;
+
+            // ================================================================
+            // MENU PRINCIPAL
+            // ================================================================
+            const menuWrapper = document.getElementById('menuWrapper');
+            const btnCpuOnca = document.getElementById('btnCpuOnca');
+            const btnCpuDog = document.getElementById('btnCpuDog');
+            const btnPvp = document.getElementById('btnPvp');
+            const howtoBtn = document.getElementById('howtoBtn');
+            const rulesOverlay = document.getElementById('rulesOverlay');
+            const closeRulesBtn = document.getElementById('closeRulesBtn');
+            const gameContainer = document.getElementById('game-container');
+            const gameFrame = document.getElementById('gameFrame');
+            const resultOverlay = document.getElementById('result-overlay');
+            const winnerText = document.getElementById('winnerText');
+            const subText = document.getElementById('subText');
+            const timerText = document.getElementById('timerText');
+
+            let returnTimer = null;
+            let currentMode = 'pvp';
+
+            function showMenu() {
+                menuWrapper.style.display = 'block';
+                gameContainer.style.display = 'none';
+                resultOverlay.classList.remove('visible');
+                gameFrame.srcdoc = '';
+                if (returnTimer) {
+                    clearInterval(returnTimer);
+                    returnTimer = null;
+                }
+            }
+
+            function showGame(mode) {
+                currentMode = mode;
+                menuWrapper.style.display = 'none';
+                gameContainer.style.display = 'block';
+                gameFrame.srcdoc = gameHTML;
+                gameFrame.onload = function() {
+                    gameFrame.contentWindow.postMessage({ type: 'setMode', mode: mode }, '*');
+                };
+            }
+
+            function showResult(winner) {
+                resultOverlay.classList.add('visible');
+                if (winner === 'onca') {
+                    winnerText.textContent = '🐆 Onça venceu!';
+                    subText.textContent = 'A onça capturou 5 cachorros e venceu a partida!';
+                } else if (winner === 'dogs') {
+                    winnerText.textContent = '🐕 Cachorros venceram!';
+                    subText.textContent = 'Os cachorros cercaram a onça e venceram a partida!';
+                } else {
+                    winnerText.textContent = '🏆 Fim de jogo!';
+                    subText.textContent = '';
+                }
+                let segundos = 10;
+                timerText.textContent = 'Voltando ao menu em ' + segundos + 's';
+                if (returnTimer) clearInterval(returnTimer);
+                returnTimer = setInterval(() => {
+                    segundos--;
+                    timerText.textContent = 'Voltando ao menu em ' + segundos + 's';
+                    if (segundos <= 0) {
+                        clearInterval(returnTimer);
+                        returnTimer = null;
+                        showMenu();
+                    }
+                }, 1000);
+            }
+
+            function startGame(mode) {
+                showGame(mode);
+            }
+
+            btnCpuOnca.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.style.transition = 'transform 0.08s, background 0.15s';
+                this.style.transform = 'scale(0.96)';
+                this.style.background = '#e9dac4';
+                setTimeout(() => { this.style.transform = ''; this.style.background = ''; }, 200);
+                startGame('cpu_onca');
+            });
+
+            btnCpuDog.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.style.transition = 'transform 0.08s, background 0.15s';
+                this.style.transform = 'scale(0.96)';
+                this.style.background = '#e9dac4';
+                setTimeout(() => { this.style.transform = ''; this.style.background = ''; }, 200);
+                startGame('cpu_dog');
+            });
+
+            btnPvp.addEventListener('click', function(e) {
+                e.stopPropagation();
+                this.style.transition = 'transform 0.08s, background 0.15s';
+                this.style.transform = 'scale(0.96)';
+                this.style.background = '#e9dac4';
+                setTimeout(() => { this.style.transform = ''; this.style.background = ''; }, 200);
+                startGame('pvp');
+            });
+
+            howtoBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (rulesOverlay.classList.contains('visible')) {
+                    rulesOverlay.classList.remove('visible');
+                } else {
+                    rulesOverlay.classList.add('visible');
+                }
+                this.style.transition = 'transform 0.08s, background 0.15s';
+                this.style.transform = 'scale(0.96)';
+                this.style.background = '#e9dac4';
+                setTimeout(() => { this.style.transform = ''; this.style.background = ''; }, 200);
+            });
+
+            closeRulesBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                rulesOverlay.classList.remove('visible');
+            });
+
+            menuWrapper.addEventListener('click', function(e) {
+                if (rulesOverlay.classList.contains('visible') && !rulesOverlay.contains(e.target) && e.target !== howtoBtn) {
+                    rulesOverlay.classList.remove('visible');
+                }
+            });
+
+            document.querySelectorAll('.menu-btn').forEach(btn => {
+                if (btn === btnCpuOnca || btn === btnCpuDog || btn === btnPvp || btn === howtoBtn) return;
+                btn.addEventListener('click', function(e) {
+                    const action = this.getAttribute('data-action') || 'indefinida';
+                    this.style.transition = 'transform 0.08s, background 0.15s';
+                    this.style.transform = 'scale(0.96)';
+                    this.style.background = '#e9dac4';
+                    setTimeout(() => { this.style.transform = ''; this.style.background = ''; }, 200);
+                    console.log('[ADUGO] Ação: "' + action + '"');
+                    if (action === 'exit') {
+                        if (confirm('Deseja realmente sair?')) {
+                            window.close();
+                        }
+                    }
+                    if (rulesOverlay.classList.contains('visible')) {
+                        rulesOverlay.classList.remove('visible');
+                    }
+                });
+                btn.addEventListener('touchstart', function() {
+                    this.style.transform = 'scale(0.97)';
+                    this.style.background = '#e9dac4';
+                }, { passive: true });
+                btn.addEventListener('touchend', function() {
+                    this.style.transform = '';
+                    this.style.background = '';
+                }, { passive: true });
+            });
+
+            window.addEventListener('message', function(event) {
+                if (event.data && event.data.type === 'gameover') {
+                    const winner = event.data.winner;
+                    console.log('[ADUGO] Fim de jogo! Vencedor: ' + winner);
+                    showResult(winner);
+                }
+                if (event.data && event.data.type === 'voltarMenu') {
+                    console.log('[ADUGO] Jogador solicitou voltar ao menu.');
+                    showMenu();
+                }
+                if (event.data && event.data.type === 'getMode') {
+                    if (event.source && event.source.postMessage) {
+                        event.source.postMessage({ type: 'setMode', mode: currentMode }, '*');
+                    }
+                }
+            });
+
+            showMenu();
+            console.log('🏹 ADUGO — Versão com randomismo anti-loop (3 repetições)');
+        })();
+    </script>
+</body>
+</html>
