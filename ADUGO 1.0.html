@@ -199,7 +199,10 @@
             display: inline-block;
             margin: 0 0.1rem;
         }
-        .rules-overlay {
+
+        /* ===== Overlays (Regras e Créditos) ===== */
+        .rules-overlay,
+        .credits-overlay {
             display: none;
             position: absolute;
             top: 0;
@@ -215,14 +218,16 @@
             animation: fadeRules 0.3s ease;
             border: 2px solid rgba(201, 173, 139, 0.2);
         }
-        .rules-overlay.visible {
+        .rules-overlay.visible,
+        .credits-overlay.visible {
             display: block;
         }
         @keyframes fadeRules {
             0% { opacity: 0; transform: scale(0.97); }
             100% { opacity: 1; transform: scale(1); }
         }
-        .rules-overlay .close-rules {
+        .rules-overlay .close-rules,
+        .credits-overlay .close-credits {
             position: absolute;
             top: 1.2rem;
             right: 1.2rem;
@@ -239,11 +244,13 @@
             transition: background 0.15s;
             opacity: 0.7;
         }
-        .rules-overlay .close-rules:hover {
+        .rules-overlay .close-rules:hover,
+        .credits-overlay .close-credits:hover {
             background: rgba(201, 173, 139, 0.2);
             opacity: 1;
         }
-        .rules-overlay h2 {
+        .rules-overlay h2,
+        .credits-overlay h2 {
             font-family: 'Frank Ruhl Libre', serif;
             font-weight: 700;
             font-size: 1.8rem;
@@ -252,16 +259,19 @@
             text-align: center;
             letter-spacing: 0.04em;
         }
-        .rules-overlay p {
+        .rules-overlay p,
+        .credits-overlay p {
             font-family: 'Barlow', sans-serif;
             font-size: 1.05rem;
             line-height: 1.6;
             color: #3d2a1e;
             margin-bottom: 0.8rem;
         }
-        .rules-overlay p:last-child {
+        .rules-overlay p:last-child,
+        .credits-overlay p:last-child {
             margin-bottom: 0;
         }
+
         #game-container {
             display: none;
             position: fixed;
@@ -416,10 +426,14 @@
             .menu-footer { gap: 0.8rem; flex-direction: row; flex-wrap: wrap; justify-content: center; }
             .menu-footer .menu-btn { font-size: clamp(0.6rem, 2.2vw, 0.85rem); padding: 0.4rem 1rem; min-width: 70px; }
             .menu-buttons { gap: 0.8rem; margin: 1.6rem 0 1rem; }
-            .rules-overlay { padding: 1.8rem 1.2rem 2.2rem; border-radius: 24px; }
-            .rules-overlay .close-rules { top: 0.8rem; right: 0.8rem; font-size: 1.5rem; }
-            .rules-overlay h2 { font-size: 1.4rem; margin-top: 0.2rem; }
-            .rules-overlay p { font-size: 0.95rem; }
+            .rules-overlay,
+            .credits-overlay { padding: 1.8rem 1.2rem 2.2rem; border-radius: 24px; }
+            .rules-overlay .close-rules,
+            .credits-overlay .close-credits { top: 0.8rem; right: 0.8rem; font-size: 1.5rem; }
+            .rules-overlay h2,
+            .credits-overlay h2 { font-size: 1.4rem; margin-top: 0.2rem; }
+            .rules-overlay p,
+            .credits-overlay p { font-size: 0.95rem; }
             #volume-control { top: 12px; }
             #volume-toggle { width: 40px; height: 40px; font-size: 20px; }
             #volume-slider-wrap { padding: 8px 12px; min-width: 100px; }
@@ -430,10 +444,14 @@
             .game-title { font-size: clamp(2.2rem, 11vw, 3rem); }
             .menu-btn { font-size: clamp(0.8rem, 3.2vw, 1rem); padding: 0.5rem 0.8rem; }
             .menu-footer .menu-btn { font-size: clamp(0.5rem, 2vw, 0.7rem); padding: 0.3rem 0.6rem; min-width: 60px; }
-            .rules-overlay { padding: 1rem 0.8rem 1.4rem; border-radius: 20px; }
-            .rules-overlay .close-rules { top: 0.5rem; right: 0.5rem; font-size: 1.3rem; }
-            .rules-overlay h2 { font-size: 1.2rem; margin-top: 0.2rem; }
-            .rules-overlay p { font-size: 0.85rem; }
+            .rules-overlay,
+            .credits-overlay { padding: 1rem 0.8rem 1.4rem; border-radius: 20px; }
+            .rules-overlay .close-rules,
+            .credits-overlay .close-credits { top: 0.5rem; right: 0.5rem; font-size: 1.3rem; }
+            .rules-overlay h2,
+            .credits-overlay h2 { font-size: 1.2rem; margin-top: 0.2rem; }
+            .rules-overlay p,
+            .credits-overlay p { font-size: 0.85rem; }
             #volume-control { top: 10px; }
             #volume-toggle { width: 36px; height: 36px; font-size: 18px; }
             #volume-slider-wrap { padding: 6px 10px; min-width: 80px; }
@@ -450,6 +468,8 @@
             <button class="menu-btn" data-mode="pvp" id="btnPvp">PvP (2 jogadores)</button>
             <button class="menu-btn" data-action="howto" id="howtoBtn">Como Jogar</button>
         </div>
+
+        <!-- Overlay de Regras -->
         <div id="rulesOverlay" class="rules-overlay">
             <button class="close-rules" id="closeRulesBtn">✕</button>
             <h2>Jogo da Onça — Regras</h2>
@@ -461,6 +481,16 @@
             <p><strong>Início do jogo:</strong> A onça começa no centro do tabuleiro. Os cachorros ocupam as casas de uma das pontas. Os jogadores alternam turnos, movendo um de seus peões por vez.</p>
             <p><strong>Dica:</strong> Os cachorros precisam trabalhar em equipe para cercar a onça. A onça deve ser rápida e esperta para capturar os cachorros antes de ser encurralada.</p>
         </div>
+
+        <!-- Overlay de Créditos (novo) -->
+        <div id="creditsOverlay" class="credits-overlay">
+            <button class="close-credits" id="closeCreditsBtn">✕</button>
+            <h2>Créditos</h2>
+            <p>Professor Guilherme Henrique Santos da Costa e estudantes do Laboratório de Jogos Eletrônicos do CEU EMEF Três Pontes.</p>
+            <p>Contato: guilherme.santos.costa@alumni.usp.br</p>
+            <p>Você também pode contribuir pelo GitHub!</p>
+        </div>
+
         <div class="pattern-divider">
             <span class="line"></span>
             <span class="diamond">◆</span>
@@ -469,10 +499,11 @@
             <span class="line"></span>
         </div>
         <div class="menu-footer">
-            <button class="menu-btn" data-action="credits">Créditos</button>
+            <button class="menu-btn" data-action="credits" id="creditsBtn">Créditos</button>
             <button class="menu-btn" data-action="exit">Sair</button>
         </div>
     </div>
+
     <div id="game-container">
         <iframe id="gameFrame" srcdoc=""></iframe>
     </div>
@@ -496,30 +527,21 @@
             // ================================================================
             const cycleDuration = 3.0;
             const pattern = [
-
-  	    // Melodia grave
-            { time: 0.0, note: 'D2', dur: 0.5 },
-            { time: 0.5, note: 'D2', dur: 0.2 },
-            { time: 0.7, note: 'D2', dur: 0.4 },
-            { time: 1.1, note: 'G2', dur: 0.4 },
-
-
-            { time: 1.5, note: 'C2', dur: 0.5 },
-            { time: 2.0, note: 'C2', dur: 0.2 },
-            { time: 2.2, note: 'C2', dur: 0.4 },
-            { time: 2.6, note: 'E2', dur: 0.4 },
-
-            // Melodia aguda
-            { time: 0.0, note: 'D4', dur: 0.4 },
-            { time: 0.4, note: 'D4', dur: 0.2 },
-            { time: 0.6, note: 'G4', dur: 0.4 },
-            { time: 1.0, note: 'C4', dur: 0.5 },
-
-
-            { time: 1.5, note: 'C4', dur: 0.4 },
-            { time: 1.9, note: 'C4', dur: 0.5 },
-            { time: 2.4, note: 'E4', dur: 0.6 },
-
+                { time: 0.0, note: 'D2', dur: 0.5 },
+                { time: 0.5, note: 'D2', dur: 0.2 },
+                { time: 0.7, note: 'D2', dur: 0.4 },
+                { time: 1.1, note: 'G2', dur: 0.4 },
+                { time: 1.5, note: 'C2', dur: 0.5 },
+                { time: 2.0, note: 'C2', dur: 0.2 },
+                { time: 2.2, note: 'C2', dur: 0.4 },
+                { time: 2.6, note: 'E2', dur: 0.4 },
+                { time: 0.0, note: 'D4', dur: 0.4 },
+                { time: 0.4, note: 'D4', dur: 0.2 },
+                { time: 0.6, note: 'G4', dur: 0.4 },
+                { time: 1.0, note: 'C4', dur: 0.5 },
+                { time: 1.5, note: 'C4', dur: 0.4 },
+                { time: 1.9, note: 'C4', dur: 0.5 },
+                { time: 2.4, note: 'E4', dur: 0.6 },
             ];
 
             let audioCtx = null;
@@ -666,7 +688,7 @@
             document.addEventListener('touchstart', initMusic);
 
             // ================================================================
-            // HTML DO JOGO (com randomismo anti-loop)
+            // HTML DO JOGO (mesmo código de sempre)
             // ================================================================
             const gameHTML = `
 <!DOCTYPE html>
@@ -1602,13 +1624,11 @@
                     turno = 'dog';
                     selectedDogIndex = null;
                 } else {
-                    // Atualiza o cachorro que foi movido
                     const dogIdx = animPiece.index;
                     dogPositions[dogIdx] = novoIdx;
                     turno = 'onca';
                     selectedDogIndex = null;
 
-                    // Atualiza o controle de repetição
                     if (dogIdx === ultimoCachorro) {
                         contadorRepeticao++;
                     } else {
@@ -1670,9 +1690,6 @@
             setTimeout(() => div.remove(), 1500);
         }
 
-        // ============================================================
-        // IA agendada com randomismo anti-loop
-        // ============================================================
         function agendarIA() {
             if (!jogoAtivo) return;
             let iaTurno = null;
@@ -1692,15 +1709,11 @@
 
                 let movimento = null;
 
-                // Se for turno dos cachorros e o mesmo cachorro foi repetido 3 vezes
                 if (iaTurno === 'dog' && contadorRepeticao >= 3) {
-                    // Força escolha aleatória entre os cachorros com movimentos legais
                     const todosMovimentos = gerarMovimentos(state, 'dog');
                     if (todosMovimentos.length > 0) {
-                        // Filtra movimentos que não sejam do mesmo cachorro repetido
                         const outros = todosMovimentos.filter(m => m.from !== ultimoCachorro);
                         if (outros.length > 0) {
-                            // Escolhe um aleatório entre os que reduzem mais a mobilidade
                             outros.sort((a, b) => {
                                 const simA = aplicarMovimento(state, a);
                                 const simB = aplicarMovimento(state, b);
@@ -1708,14 +1721,11 @@
                                 const mobB = contaMovimentosOnca(simB);
                                 return mobA - mobB;
                             });
-                            // Pega os 3 melhores e sorteia um
                             const top = outros.slice(0, Math.min(3, outros.length));
                             movimento = top[Math.floor(Math.random() * top.length)];
-                            // Reseta o contador para evitar repetição infinita
                             contadorRepeticao = 0;
                             ultimoCachorro = -1;
                         } else {
-                            // Se só tem movimentos do mesmo cachorro, usa o melhor mesmo
                             movimento = melhorMovimento(state, turno, 4);
                         }
                     }
@@ -1956,6 +1966,9 @@
             const howtoBtn = document.getElementById('howtoBtn');
             const rulesOverlay = document.getElementById('rulesOverlay');
             const closeRulesBtn = document.getElementById('closeRulesBtn');
+            const creditsOverlay = document.getElementById('creditsOverlay');
+            const closeCreditsBtn = document.getElementById('closeCreditsBtn');
+            const creditsBtn = document.getElementById('creditsBtn');
             const gameContainer = document.getElementById('game-container');
             const gameFrame = document.getElementById('gameFrame');
             const resultOverlay = document.getElementById('result-overlay');
@@ -1990,13 +2003,13 @@
             function showResult(winner) {
                 resultOverlay.classList.add('visible');
                 if (winner === 'onca') {
-                    winnerText.textContent = '🐆 Onça venceu!';
-                    subText.textContent = 'A onça capturou 5 cachorros e venceu a partida!';
+                    winnerText.textContent = 'Onça venceu!';
+                    subText.textContent = 'A onça capturou 5 cachorros e venceu a partida.';
                 } else if (winner === 'dogs') {
-                    winnerText.textContent = '🐕 Cachorros venceram!';
-                    subText.textContent = 'Os cachorros cercaram a onça e venceram a partida!';
+                    winnerText.textContent = 'Cachorros venceram!';
+                    subText.textContent = 'Os cachorros cercaram a onça e venceram a partida.';
                 } else {
-                    winnerText.textContent = '🏆 Fim de jogo!';
+                    winnerText.textContent = 'Fim de jogo!';
                     subText.textContent = '';
                 }
                 let segundos = 10;
@@ -2017,6 +2030,7 @@
                 showGame(mode);
             }
 
+            // Botões de modo de jogo
             btnCpuOnca.addEventListener('click', function(e) {
                 e.stopPropagation();
                 this.style.transition = 'transform 0.08s, background 0.15s';
@@ -2044,13 +2058,13 @@
                 startGame('pvp');
             });
 
+            // Botão Como Jogar (abre regras, fecha créditos se aberto)
             howtoBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
-                if (rulesOverlay.classList.contains('visible')) {
-                    rulesOverlay.classList.remove('visible');
-                } else {
-                    rulesOverlay.classList.add('visible');
+                if (creditsOverlay.classList.contains('visible')) {
+                    creditsOverlay.classList.remove('visible');
                 }
+                rulesOverlay.classList.toggle('visible');
                 this.style.transition = 'transform 0.08s, background 0.15s';
                 this.style.transform = 'scale(0.96)';
                 this.style.background = '#e9dac4';
@@ -2062,21 +2076,43 @@
                 rulesOverlay.classList.remove('visible');
             });
 
+            // Botão Créditos (abre créditos, fecha regras se aberto)
+            creditsBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (rulesOverlay.classList.contains('visible')) {
+                    rulesOverlay.classList.remove('visible');
+                }
+                creditsOverlay.classList.toggle('visible');
+                this.style.transition = 'transform 0.08s, background 0.15s';
+                this.style.transform = 'scale(0.96)';
+                this.style.background = '#e9dac4';
+                setTimeout(() => { this.style.transform = ''; this.style.background = ''; }, 200);
+            });
+
+            closeCreditsBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                creditsOverlay.classList.remove('visible');
+            });
+
+            // Fecha overlays ao clicar fora deles
             menuWrapper.addEventListener('click', function(e) {
                 if (rulesOverlay.classList.contains('visible') && !rulesOverlay.contains(e.target) && e.target !== howtoBtn) {
                     rulesOverlay.classList.remove('visible');
                 }
+                if (creditsOverlay.classList.contains('visible') && !creditsOverlay.contains(e.target) && e.target !== creditsBtn) {
+                    creditsOverlay.classList.remove('visible');
+                }
             });
 
+            // Outros botões do menu (Créditos já tratado, Sair)
             document.querySelectorAll('.menu-btn').forEach(btn => {
-                if (btn === btnCpuOnca || btn === btnCpuDog || btn === btnPvp || btn === howtoBtn) return;
+                if (btn === btnCpuOnca || btn === btnCpuDog || btn === btnPvp || btn === howtoBtn || btn === creditsBtn) return;
                 btn.addEventListener('click', function(e) {
                     const action = this.getAttribute('data-action') || 'indefinida';
                     this.style.transition = 'transform 0.08s, background 0.15s';
                     this.style.transform = 'scale(0.96)';
                     this.style.background = '#e9dac4';
                     setTimeout(() => { this.style.transform = ''; this.style.background = ''; }, 200);
-                    console.log('[ADUGO] Ação: "' + action + '"');
                     if (action === 'exit') {
                         if (confirm('Deseja realmente sair?')) {
                             window.close();
@@ -2084,6 +2120,9 @@
                     }
                     if (rulesOverlay.classList.contains('visible')) {
                         rulesOverlay.classList.remove('visible');
+                    }
+                    if (creditsOverlay.classList.contains('visible')) {
+                        creditsOverlay.classList.remove('visible');
                     }
                 });
                 btn.addEventListener('touchstart', function() {
@@ -2096,14 +2135,13 @@
                 }, { passive: true });
             });
 
+            // Comunicação com o iframe
             window.addEventListener('message', function(event) {
                 if (event.data && event.data.type === 'gameover') {
                     const winner = event.data.winner;
-                    console.log('[ADUGO] Fim de jogo! Vencedor: ' + winner);
                     showResult(winner);
                 }
                 if (event.data && event.data.type === 'voltarMenu') {
-                    console.log('[ADUGO] Jogador solicitou voltar ao menu.');
                     showMenu();
                 }
                 if (event.data && event.data.type === 'getMode') {
@@ -2114,7 +2152,7 @@
             });
 
             showMenu();
-            console.log('🏹 ADUGO — Versão com randomismo anti-loop (3 repetições)');
+            console.log('ADUGO — com créditos e controle de volume');
         })();
     </script>
 </body>
