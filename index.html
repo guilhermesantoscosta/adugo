@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@900&family=Barlow:wght@400;600;700&display=swap" rel="stylesheet" />
+    <script src="https://unpkg.com/peerjs@1.4.7/dist/peerjs.min.js"></script>
     <style>
         /* ===== CSS COMPLETO ===== */
         *,
@@ -466,6 +467,11 @@
             <button class="menu-btn" data-mode="cpu_onca" id="btnCpuOnca"> Onça vs CPU</button>
             <button class="menu-btn" data-mode="cpu_dog" id="btnCpuDog">CPU vs Cachorro</button>
             <button class="menu-btn" data-mode="pvp" id="btnPvp">PvP (2 jogadores)</button>
+            <button class="menu-btn" id="btnHost">Criar Sala (Online)</button>
+            <button class="menu-btn" id="btnJoin">Entrar em Sala</button>
+            <div style="width:90%; max-width:380px; margin:0.5rem auto;">
+                <input type="text" id="roomIdInput" placeholder="ID da sala" style="width:100%; padding:0.5rem; border-radius:30px; border:2px solid #d9c2a7; text-align:center; font-size:1rem; display:none;">
+            </div>
             <button class="menu-btn" data-action="howto" id="howtoBtn">Como Jogar</button>
         </div>
 
@@ -482,7 +488,7 @@
             <p><strong>Dica:</strong> Os cachorros precisam trabalhar em equipe para cercar a onça. A onça deve ser rápida e esperta para capturar os cachorros antes de ser encurralada.</p>
         </div>
 
-        <!-- Overlay de Créditos (novo) -->
+        <!-- Overlay de Créditos -->
         <div id="creditsOverlay" class="credits-overlay">
             <button class="close-credits" id="closeCreditsBtn">✕</button>
             <h2>Créditos</h2>
@@ -688,7 +694,7 @@
             document.addEventListener('touchstart', initMusic);
 
             // ================================================================
-            // HTML DO JOGO (mesmo código de sempre)
+            // HTML DO JOGO (modificado para suportar PeerJS)
             // ================================================================
             const gameHTML = `
 <!DOCTYPE html>
@@ -800,7 +806,7 @@
         import { CSS2DRenderer } from 'three/addons/renderers/CSS2DRenderer.js';
 
         // ============================================================
-        // CENA (mesmo código de sempre)
+        // CENA
         // ============================================================
         const scene = new THREE.Scene();
         scene.background = new THREE.Color(0x87CEEB);
@@ -1237,7 +1243,7 @@
         }
 
         // ============================================================
-        // IA - profundidade 4 com penalidade extrema e randomismo anti-loop
+        // IA (mesma de antes)
         // ============================================================
         let ultimoCachorro = -1;
         let contadorRepeticao = 0;
@@ -1483,6 +1489,16 @@
         let gameEnded = false;
         let gameMode = 'pvp';
 
+        // ============================================================
+        // NOVAS VARIÁVEIS PARA MODO ONLINE
+        // ============================================================
+        let onlineMode = false;
+        let isHost = false;
+        let myTurn = true;
+
+        // ============================================================
+        // FUNÇÕES DO JOGO (initDogs, ocupadas, etc.)
+        // ============================================================
         function initDogs() {
             dogMeshes.forEach(mesh => scene.remove(mesh));
             dogMeshes = [];
@@ -1642,8 +1658,17 @@
 
                 const fim = verificarFimJogo();
                 if (!fim && jogoAtivo) {
-                    realcarMovimentos();
-                    agendarIA();
+                    if (!onlineMode) {
+                        realcarMovimentos();
+                        agendarIA();
+                    } else {
+                        // No online, se for minha vez, realça
+                        if (myTurn) {
+                            realcarMovimentos();
+                        } else {
+                            discos.forEach(d => { if (d.material) d.material.emissiveIntensity = 0; });
+                        }
+                    }
                 } else {
                     discos.forEach(d => { if (d.material) d.material.emissiveIntensity = 0; });
                 }
@@ -1748,6 +1773,73 @@
         }
 
         // ============================================================
+        // APLICAÇÃO DE MOVIMENTO REMOTO (PeerJS)
+        // ============================================================
+        function aplicarMovimentoRemoto(move) {
+            if (!jogoAtivo) return;
+            if (movendo) {
+                setTimeout(() => aplicarMovimentoRemoto(move), 100);
+                return;
+            }
+
+            console.log('Movimento remoto recebido:', move);
+
+            if (move.tipo === 'onca') {
+                let captureIdx = -1;
+                if (move.capture !== undefined && move.capture !== null) {
+                    const idx = move.capture;
+                    if (idx < dogPositions.length && dogPositions[idx] !== undefined) {
+                        dogPositions.splice(idx, 1);
+                        scene.remove(dogMeshes[idx]);
+                        dogMeshes.splice(idx, 1);
+                        for (let i = idx; i < dogMeshes.length; i++) dogMeshes[i].userData.index = i;
+                        if (selectedDogIndex !== null && selectedDogIndex >= dogMeshes.length) selectedDogIndex = null;
+                        capturasOnca++;
+                        document.getElementById('captures').innerText = capturasOnca;
+                    }
+                }
+                oncaIdx = move.to;
+                onca.position.set(vertexPos[oncaIdx].x, 0.11, vertexPos[oncaIdx].z);
+                turno = 'dog';
+                selectedDogIndex = null;
+                atualizarVisual();
+                if (verificarFimJogo()) return;
+                // Atualiza myTurn: se o host é onça e o turno é dog, então o host não joga agora, o convidado joga.
+                myTurn = (turno === (isHost ? 'dog' : 'onca'));
+                if (myTurn) {
+                    mostrarMsg("Sua vez!", false);
+                    realcarMovimentos();
+                } else {
+                    mostrarMsg("Aguardando oponente...", false);
+                    selectedDogIndex = null;
+                    discos.forEach(d => { if (d.material) d.material.emissiveIntensity = 0; });
+                }
+            } else if (move.tipo === 'dog') {
+                const dogIdx = move.from;
+                if (dogIdx < dogPositions.length) {
+                    dogPositions[dogIdx] = move.to;
+                    dogMeshes[dogIdx].position.set(vertexPos[move.to].x, 0.11, vertexPos[move.to].z);
+                    turno = 'onca';
+                    selectedDogIndex = null;
+                    atualizarVisual();
+                    if (verificarFimJogo()) return;
+                    myTurn = (turno === (isHost ? 'onca' : 'dog'));
+                    if (myTurn) {
+                        mostrarMsg("Sua vez!", false);
+                        realcarMovimentos();
+                    } else {
+                        mostrarMsg("Aguardando oponente...", false);
+                        selectedDogIndex = null;
+                        discos.forEach(d => { if (d.material) d.material.emissiveIntensity = 0; });
+                    }
+                }
+            }
+            if (jogoAtivo && myTurn) {
+                realcarMovimentos();
+            }
+        }
+
+        // ============================================================
         // DISCOS E LINHAS
         // ============================================================
         const discos = [];
@@ -1776,7 +1868,7 @@
         scene.add(lineGroup);
 
         // ============================================================
-        // ANIMAÇÃO (flutuação)
+        // ANIMAÇÃO
         // ============================================================
         let tempo = 0;
         function flutuar() {
@@ -1807,7 +1899,7 @@
         });
 
         // ============================================================
-        // INTERAÇÃO HUMANA
+        // INTERAÇÃO HUMANA (modificada para online)
         // ============================================================
         const raycaster = new THREE.Raycaster();
         const pointer = new THREE.Vector2();
@@ -1819,6 +1911,11 @@
                 mostrarMsg("A CPU está pensando...", true);
                 return;
             }
+            if (onlineMode && !myTurn) {
+                mostrarMsg("Aguardando sua vez...", true);
+                return;
+            }
+
             const rect = renderer.domElement.getBoundingClientRect();
             pointer.x = ((clientX - rect.left) / rect.width) * 2 - 1;
             pointer.y = -((clientY - rect.top) / rect.height) * 2 + 1;
@@ -1866,6 +1963,21 @@
                             break;
                         }
                     }
+                    // Se online, envia movimento
+                    if (onlineMode) {
+                        const moveData = {
+                            tipo: 'onca',
+                            from: oncaIdx,
+                            to: alvo,
+                            capture: captureDogIndex !== -1 ? captureDogIndex : undefined
+                        };
+                        if (window.parent !== window) {
+                            window.parent.postMessage({ type: 'localMove', move: moveData }, '*');
+                        }
+                        myTurn = false;
+                        discos.forEach(d => { if (d.material) d.material.emissiveIntensity = 0; });
+                        mostrarMsg("Movimento enviado, aguarde...", false);
+                    }
                     iniciarMovimento('onca', oncaIdx, alvo, captureDogIndex !== -1 ? { dogIndex: captureDogIndex } : null);
                 } else {
                     mostrarMsg("Movimento inválido para a onça!", true);
@@ -1877,6 +1989,19 @@
                 }
                 const dogPos = dogPositions[selectedDogIndex];
                 if (movimentosValidosCachorro(dogPos, alvo)) {
+                    if (onlineMode) {
+                        const moveData = {
+                            tipo: 'dog',
+                            from: selectedDogIndex,
+                            to: alvo
+                        };
+                        if (window.parent !== window) {
+                            window.parent.postMessage({ type: 'localMove', move: moveData }, '*');
+                        }
+                        myTurn = false;
+                        discos.forEach(d => { if (d.material) d.material.emissiveIntensity = 0; });
+                        mostrarMsg("Movimento enviado, aguarde...", false);
+                    }
                     iniciarMovimento({ type: 'dog', index: selectedDogIndex }, dogPos, alvo, null);
                 } else {
                     mostrarMsg("Movimento inválido para o cachorro!", true);
@@ -1910,16 +2035,33 @@
         confirmModal.addEventListener('click', (e) => { if (e.target === confirmModal) confirmModal.classList.remove('visible'); });
 
         // ============================================================
-        // MODO DE JOGO
+        // RECEBENDO MENSAGENS DO PAI (modo, movimento remoto)
         // ============================================================
         window.addEventListener('message', (event) => {
             if (event.data && event.data.type === 'setMode') {
                 gameMode = event.data.mode || 'pvp';
+                if (gameMode === 'pvp_online') {
+                    onlineMode = true;
+                    isHost = event.data.isHost || false;
+                    myTurn = isHost ? true : false; // host começa (onça)
+                    if (!isHost) {
+                        mostrarMsg("Aguardando o oponente...", false);
+                    }
+                } else {
+                    onlineMode = false;
+                    myTurn = true;
+                }
                 console.log('Modo de jogo definido:', gameMode);
                 reiniciarJogo();
             }
+            if (event.data && event.data.type === 'remoteMove') {
+                aplicarMovimentoRemoto(event.data.move);
+            }
         });
 
+        // ============================================================
+        // REINICIAR JOGO
+        // ============================================================
         function reiniciarJogo() {
             dogMeshes.forEach(mesh => scene.remove(mesh));
             dogMeshes = [];
@@ -1957,7 +2099,7 @@
 </html>`;
 
             // ================================================================
-            // MENU PRINCIPAL
+            // MENU PRINCIPAL E LÓGICA DE REDE
             // ================================================================
             const menuWrapper = document.getElementById('menuWrapper');
             const btnCpuOnca = document.getElementById('btnCpuOnca');
@@ -1979,6 +2121,16 @@
             let returnTimer = null;
             let currentMode = 'pvp';
 
+            // Variáveis PeerJS
+            let peer = null;
+            let connection = null;
+            let isHost = false;
+            let roomId = '';
+
+            const btnHost = document.getElementById('btnHost');
+            const btnJoin = document.getElementById('btnJoin');
+            const roomIdInput = document.getElementById('roomIdInput');
+
             function showMenu() {
                 menuWrapper.style.display = 'block';
                 gameContainer.style.display = 'none';
@@ -1988,6 +2140,16 @@
                     clearInterval(returnTimer);
                     returnTimer = null;
                 }
+                // Fechar conexão Peer se existir
+                if (connection) {
+                    connection.close();
+                    connection = null;
+                }
+                if (peer) {
+                    peer.destroy();
+                    peer = null;
+                }
+                roomIdInput.style.display = 'none';
             }
 
             function showGame(mode) {
@@ -1996,7 +2158,7 @@
                 gameContainer.style.display = 'block';
                 gameFrame.srcdoc = gameHTML;
                 gameFrame.onload = function() {
-                    gameFrame.contentWindow.postMessage({ type: 'setMode', mode: mode }, '*');
+                    gameFrame.contentWindow.postMessage({ type: 'setMode', mode: mode, isHost: isHost }, '*');
                 };
             }
 
@@ -2030,7 +2192,106 @@
                 showGame(mode);
             }
 
-            // Botões de modo de jogo
+            // ================================================================
+            // PEERJS: CRIAR SALA
+            // ================================================================
+            btnHost.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (peer) {
+                    peer.destroy();
+                    peer = null;
+                }
+                peer = new Peer(undefined, { host: 'peerjs.com', port: 443, secure: true, path: '/' });
+                peer.on('open', (id) => {
+                    roomId = id;
+                    roomIdInput.value = id;
+                    roomIdInput.style.display = 'block';
+                    alert('Sala criada! ID: ' + id + '\nCompartilhe com o outro jogador.');
+                    isHost = true;
+                    peer.on('connection', (conn) => {
+                        connection = conn;
+                        setupConnection();
+                        startGame('pvp_online');
+                    });
+                });
+                peer.on('error', (err) => {
+                    alert('Erro ao criar sala: ' + err.type);
+                    console.error(err);
+                });
+            });
+
+            // ================================================================
+            // PEERJS: ENTRAR EM SALA
+            // ================================================================
+            btnJoin.addEventListener('click', function(e) {
+                e.stopPropagation();
+                const id = prompt('Digite o ID da sala:');
+                if (!id) return;
+                if (peer) {
+                    peer.destroy();
+                    peer = null;
+                }
+                peer = new Peer(undefined, { host: 'peerjs.com', port: 443, secure: true, path: '/' });
+                peer.on('open', () => {
+                    connection = peer.connect(id);
+                    connection.on('open', () => {
+                        isHost = false;
+                        roomId = id;
+                        setupConnection();
+                        startGame('pvp_online');
+                    });
+                    connection.on('error', (err) => {
+                        alert('Falha ao conectar: ' + err.type);
+                    });
+                });
+                peer.on('error', (err) => {
+                    alert('Erro ao entrar: ' + err.type);
+                });
+            });
+
+            function setupConnection() {
+                connection.on('data', (data) => {
+                    if (gameFrame.contentWindow) {
+                        gameFrame.contentWindow.postMessage({ type: 'remoteMove', move: data }, '*');
+                    }
+                });
+                connection.on('close', () => {
+                    alert('A conexão foi encerrada pelo oponente.');
+                    showMenu();
+                });
+                // Guarda referência para envio
+                window.connection = connection;
+                window.isHost = isHost;
+            }
+
+            // ================================================================
+            // RECEBER MOVIMENTO DO IFRAME E ENVIAR VIA PEER
+            // ================================================================
+            window.addEventListener('message', (event) => {
+                if (event.data && event.data.type === 'localMove') {
+                    if (window.connection && window.connection.open) {
+                        window.connection.send(event.data.move);
+                    } else {
+                        console.warn('Conexão não disponível para enviar movimento');
+                    }
+                }
+                if (event.data && event.data.type === 'gameover') {
+                    const winner = event.data.winner;
+                    showResult(winner);
+                }
+                if (event.data && event.data.type === 'voltarMenu') {
+                    showMenu();
+                }
+                if (event.data && event.data.type === 'getMode') {
+                    if (event.source && event.source.postMessage) {
+                        event.source.postMessage({ type: 'setMode', mode: currentMode, isHost: isHost }, '*');
+                    }
+                }
+            });
+
+            // ================================================================
+            // BOTÕES DE MODO (CPU, PVP, etc.)
+            // ================================================================
             btnCpuOnca.addEventListener('click', function(e) {
                 e.stopPropagation();
                 this.style.transition = 'transform 0.08s, background 0.15s';
@@ -2058,7 +2319,9 @@
                 startGame('pvp');
             });
 
-            // Botão Como Jogar (abre regras, fecha créditos se aberto)
+            // ================================================================
+            // REGRAS E CRÉDITOS
+            // ================================================================
             howtoBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 if (creditsOverlay.classList.contains('visible')) {
@@ -2076,7 +2339,6 @@
                 rulesOverlay.classList.remove('visible');
             });
 
-            // Botão Créditos (abre créditos, fecha regras se aberto)
             creditsBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 if (rulesOverlay.classList.contains('visible')) {
@@ -2094,7 +2356,6 @@
                 creditsOverlay.classList.remove('visible');
             });
 
-            // Fecha overlays ao clicar fora deles
             menuWrapper.addEventListener('click', function(e) {
                 if (rulesOverlay.classList.contains('visible') && !rulesOverlay.contains(e.target) && e.target !== howtoBtn) {
                     rulesOverlay.classList.remove('visible');
@@ -2104,9 +2365,9 @@
                 }
             });
 
-            // Outros botões do menu (Créditos já tratado, Sair)
+            // Outros botões (Sair, etc.)
             document.querySelectorAll('.menu-btn').forEach(btn => {
-                if (btn === btnCpuOnca || btn === btnCpuDog || btn === btnPvp || btn === howtoBtn || btn === creditsBtn) return;
+                if (btn === btnCpuOnca || btn === btnCpuDog || btn === btnPvp || btn === howtoBtn || btn === creditsBtn || btn === btnHost || btn === btnJoin) return;
                 btn.addEventListener('click', function(e) {
                     const action = this.getAttribute('data-action') || 'indefinida';
                     this.style.transition = 'transform 0.08s, background 0.15s';
@@ -2135,24 +2396,8 @@
                 }, { passive: true });
             });
 
-            // Comunicação com o iframe
-            window.addEventListener('message', function(event) {
-                if (event.data && event.data.type === 'gameover') {
-                    const winner = event.data.winner;
-                    showResult(winner);
-                }
-                if (event.data && event.data.type === 'voltarMenu') {
-                    showMenu();
-                }
-                if (event.data && event.data.type === 'getMode') {
-                    if (event.source && event.source.postMessage) {
-                        event.source.postMessage({ type: 'setMode', mode: currentMode }, '*');
-                    }
-                }
-            });
-
             showMenu();
-            console.log('ADUGO — com créditos e controle de volume');
+            console.log('ADUGO com suporte a multiplayer online via PeerJS');
         })();
     </script>
 </body>
